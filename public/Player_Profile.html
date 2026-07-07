@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="nav-logo-wrap">
-      <img src="icons/logo.svg" width="40" height="40" alt="Table Tennis Club Beograd">
+      <img src="icons/logo-black.svg" width="40" height="40" alt="Table Tennis Club Beograd">
     </div>
     <div class="nav-side right">
       <div class="nav-btn">
@@ -82,7 +82,7 @@
       </div>
     </div>
     <div class="overlay-panel">
-      <img src="logo-text-mr9mig97.svg" alt="Table Tennis Club Beograd" style="display:block; width:min(300px, 88%); height:auto;">
+      <img src="icons/menu-logo-text.svg" alt="Table Tennis Club Beograd" style="display:block; width:min(300px, 88%); height:auto;">
       <div class="overlay-menu">
         <div class="overlay-menu-item">
           <img src="icons/info-32.svg" width="32" height="32" alt="">
@@ -186,7 +186,7 @@
 
   <!-- ============ FOOTER ============ -->
   <div class="site-footer">
-    <img src="ic-32-ttcb_logo-main-mr3gpg39.svg" width="40" height="40" alt="Table Tennis Club Beograd">
+    <img src="icons/logo-main.svg" width="40" height="40" alt="Table Tennis Club Beograd">
     <div class="footer-meta">
       <span>Table Tennis Club Beograd</span>
       <span>2026</span>
@@ -207,20 +207,36 @@
     .then(function (p) {
       if (!p) return;
       document.getElementById('pName').textContent = p.name;
-      document.getElementById('pId').textContent = p.id;
-      document.getElementById('pRating').textContent = p.rating;
-      document.getElementById('pRank').textContent = p.rank;
-      document.getElementById('pRankChange').textContent = Math.abs(p.rankChange || 0);
-      document.getElementById('pTournaments').textContent = p.tournaments;
-      document.getElementById('pMatches').textContent = p.matches;
-      document.getElementById('pWins').textContent = p.wins;
-      document.getElementById('pLosses').textContent = p.losses;
-      document.getElementById('pWinRate').textContent = typeof p.winRate === 'number' ? p.winRate.toFixed(2) + '%' : p.winRate;
-      document.getElementById('pAge').textContent = typeof p.age === 'number' ? p.age + ' years' : p.age;
-      document.getElementById('pHand').textContent = p.hand;
-      document.getElementById('pBlade').textContent = p.blade;
-      document.getElementById('pRightRubber').textContent = p.rightRubber;
-      document.getElementById('pLeftRubber').textContent = p.leftRubber;
+      document.getElementById('pId').textContent = p.clubId != null ? p.clubId : p.id;
+      document.getElementById('pRating').textContent = p.rating != null ? p.rating : '\u2014';
+      document.getElementById('pRatingArrow').src = 'icons/' + (p.trend === 'down' ? 'arrow-down.svg' : 'arrow-up.svg');
+      document.getElementById('pRatingArrow').style.display = p.rating == null ? 'none' : '';
+      document.getElementById('pRank').textContent = p.rank != null ? p.rank : '\u2014';
+
+      var rankArrow = document.getElementById('pRankArrow');
+      var rankChangeEl = document.getElementById('pRankChange');
+      if (p.rankChange == null || p.rankChange === 0) {
+        rankArrow.style.display = 'none';
+        rankChangeEl.style.display = 'none';
+      } else {
+        var up = p.rankChange > 0;
+        rankArrow.style.display = '';
+        rankChangeEl.style.display = '';
+        rankArrow.src = 'icons/' + (up ? 'arrow-up.svg' : 'arrow-down.svg');
+        rankChangeEl.style.color = up ? '#5AAD32' : '#ED6455';
+        rankChangeEl.textContent = Math.abs(p.rankChange);
+      }
+
+      document.getElementById('pTournaments').textContent = p.tournaments || 0;
+      document.getElementById('pMatches').textContent = p.matches || 0;
+      document.getElementById('pWins').textContent = p.won || 0;
+      document.getElementById('pLosses').textContent = p.lost || 0;
+      document.getElementById('pWinRate').textContent = typeof p.winRate === 'number' ? p.winRate.toFixed(2) + '%' : '\u2014';
+      document.getElementById('pAge').textContent = typeof p.age === 'number' ? p.age + ' years' : '\u2014';
+      document.getElementById('pHand').textContent = p.hand === 'left' ? 'Left hand' : p.hand === 'right' ? 'Right hand' : '\u2014';
+      document.getElementById('pBlade').textContent = p.blade || '\u2014';
+      document.getElementById('pRightRubber').textContent = p.rightRubber || '\u2014';
+      document.getElementById('pLeftRubber').textContent = p.leftRubber || '\u2014';
     })
     .catch(function () {});
 })();

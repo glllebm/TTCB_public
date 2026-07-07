@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="nav-logo-wrap">
-      <img src="icons/logo.svg" width="40" height="40" alt="Table Tennis Club Beograd">
+      <img src="icons/logo-black.svg" width="40" height="40" alt="Table Tennis Club Beograd">
     </div>
     <div class="nav-side right">
       <div class="nav-btn">
@@ -82,7 +82,7 @@
       </div>
     </div>
     <div class="overlay-panel">
-      <img src="logo-text-mr9mig97.svg" alt="Table Tennis Club Beograd" style="display:block; width:min(300px, 88%); height:auto;">
+      <img src="icons/menu-logo-text.svg" alt="Table Tennis Club Beograd" style="display:block; width:min(300px, 88%); height:auto;">
       <div class="overlay-menu">
         <div class="overlay-menu-item">
           <img src="icons/info-32.svg" width="32" height="32" alt="">
@@ -108,29 +108,30 @@
 
     <!-- Tournament info row -->
     <div class="detail-row">
-      <div class="tourn-card">
+      <div class="tourn-card" id="tCard">
         <div class="tourn-card-body">
-          <div class="tourn-title">League Series</div>
+          <div class="tourn-title" id="tCategory">\u2014</div>
           <div class="tourn-card-meta">
-            <div class="meta-line"><img src="icons/calendar.svg" width="16" height="16" alt=""><span class="meta-label">Date</span><span class="meta-val">02.06.2026</span></div>
-            <div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="meta-label">Players</span><span class="meta-val">up 10</span></div>
+            <div class="meta-line"><img src="icons/calendar.svg" width="16" height="16" alt=""><span class="meta-label">Date</span><span class="meta-val" id="tDate">\u2014</span></div>
+            <div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="meta-label">Players</span><span class="meta-val" id="tCapacity">\u2014</span></div>
           </div>
         </div>
-        <img class="tourn-ball" src="icons/ball-series.png" alt="">
+        <img class="tourn-ball" src="icons/ball-series.png" alt="" id="tBall">
       </div>
       <div class="spots-card">
-        <div class="spots-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="spots-label">Available spots</span><span class="spots-val">4</span></div>
+        <div class="spots-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="spots-label">Available spots</span><span class="spots-val" id="tFreeSlots">\u2014</span></div>
       </div>
     </div>
 
     <!-- Registration banner -->
     <div class="banner">
       <div class="banner-text">To register for the tournament, send the organizer a message on Telegram with your first and last name in Latin characters.</div>
-      <a class="banner-btn" href="#">
+      <a class="banner-btn" href="#" id="telegramBtn">
         Open Telegram
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 12H6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.8589 5.3176L19.5413 12L12.8589 18.6824" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
+
 
     <!-- Heading -->
     <div class="page-heading" style="margin-bottom:24px;">
@@ -155,7 +156,7 @@
 
   <!-- ============ FOOTER ============ -->
   <div class="site-footer">
-    <img src="ic-32-ttcb_logo-main-mr3gpg39.svg" width="40" height="40" alt="Table Tennis Club Beograd">
+    <img src="icons/logo-main.svg" width="40" height="40" alt="Table Tennis Club Beograd">
     <div class="footer-meta">
       <span>Table Tennis Club Beograd</span>
       <span>2026</span>
@@ -167,56 +168,86 @@
 <script src="js/main.js"></script>
 <script>
 (function () {
-  var filled = [
-    { num: '1', name: 'Nurgaleev Eduard', tournaments: '3', winRate: '85.7%', rank: '1', rating: '2048' },
-    { num: '2', name: 'Nurgaleev Eduard', tournaments: '3', winRate: '85.7%', rank: '2', rating: '2048' },
-    { num: '3', name: 'Nurgaleev Eduard', tournaments: '3', winRate: '85.7%', rank: '4', rating: '2048' },
-    { num: '4', name: 'Nurgaleev Eduard', tournaments: '3', winRate: '85.7%', rank: '10', rating: '2048' },
-    { num: '5', name: 'Nurgaleev Eduard', tournaments: '3', winRate: '85.7%', rank: '16', rating: '2048' },
-    { num: '6', name: 'Nurgaleev Eduard', tournaments: '3', winRate: '85.7%', rank: '12', rating: '2048' },
-  ].map(function (p) { return Object.assign({}, p, { nameColor: '#1A1A1A', hasRating: true }); });
+  // TODO: set your real club Telegram chat link here.
+  var TELEGRAM_URL = 'https://t.me/';
 
-  var empty = [7, 8, 9, 10].map(function (n) {
-    return { num: String(n), name: 'Player', nameColor: '#CCCCCC', tournaments: '', winRate: '', rank: '', hasRating: false };
-  });
-
-  var players = filled.concat(empty);
+  var BALL_BY_CATEGORY = {
+    'League Series': 'ball-series.png',
+    'League Cup': 'ball-cup.png',
+    'League Masters': 'ball-masters.png',
+  };
 
   function ratingCell(p) {
-    if (!p.hasRating) return '<div class="plate no-rating">—</div>';
-    return '<div class="rating-plate"><span class="val">' + p.rating + '</span><img src="icons/arrow-up.svg" width="14" height="14" alt="" style="width:20px;height:20px"></div>';
+    if (!p || p.empty || p.rating == null) return '<div class="plate no-rating">\u2014</div>';
+    return '<div class="rating-plate"><span class="val">' + p.rating + '</span></div>';
   }
 
   function rowHtml(p, notFirst) {
+    var name = p.empty ? 'Player' : (p.name || '\u2014');
+    var nameColor = p.empty ? '#CCCCCC' : '#1A1A1A';
     return (notFirst ? '<div class="row-divider"></div>' : '') +
       '<div class="detail-table-row detail-row-item">' +
-      '<span class="num">' + p.num + '</span>' +
-      '<span class="name" style="color:' + p.nameColor + '">' + p.name + '</span>' +
-      '<div class="plate">' + p.tournaments + '</div>' +
-      '<div class="plate">' + p.winRate + '</div>' +
-      '<div class="plate rank-plate">' + p.rank + '</div>' +
+      '<span class="num">' + p.seat + '</span>' +
+      '<span class="name" style="color:' + nameColor + '">' + name + '</span>' +
+      '<div class="plate">' + (p.empty ? '' : (p.tournaments || 0)) + '</div>' +
+      '<div class="plate">' + (p.empty || p.winRate == null ? '' : p.winRate.toFixed(1) + '%') + '</div>' +
+      '<div class="plate rank-plate">' + (p.empty || p.rank == null ? '' : p.rank) + '</div>' +
       ratingCell(p) +
       '</div>';
   }
 
   function cardHtml(p) {
+    var name = p.empty ? 'Player' : (p.name || '\u2014');
+    var nameColor = p.empty ? '#CCCCCC' : '#1A1A1A';
+    var hasRating = !p.empty && p.rating != null;
     return '<div class="detail-card-item">' +
-      '<div><div class="card-line"><span class="label">№</span><span class="num">' + p.num + '</span></div>' +
-      '<div class="card-line"><span class="label">Player</span><span class="name" style="color:' + p.nameColor + '">' + p.name + '</span></div></div>' +
+      '<div><div class="card-line"><span class="label">\u2116</span><span class="num">' + p.seat + '</span></div>' +
+      '<div class="card-line"><span class="label">Player</span><span class="name" style="color:' + nameColor + '">' + name + '</span></div></div>' +
       '<div class="detail-card-stats">' +
-      '<div class="stat"><span class="label">Tournaments</span><div class="mini-plate">' + p.tournaments + '</div></div>' +
-      '<div class="stat"><span class="label">Win rate</span><div class="mini-plate">' + p.winRate + '</div></div>' +
-      '<div class="stat"><span class="label">Rank</span><div class="mini-plate" style="font-weight:700">' + p.rank + '</div></div>' +
-      '<div class="stat"><span class="label">Rating</span>' + (p.hasRating ?
-        '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span><img src="icons/arrow-up.svg" width="12" height="12" alt=""></div>'
-        : '<div class="mini-plate no-rating">—</div>') +
+      '<div class="stat"><span class="label">Tournaments</span><div class="mini-plate">' + (p.empty ? '' : (p.tournaments || 0)) + '</div></div>' +
+      '<div class="stat"><span class="label">Win rate</span><div class="mini-plate">' + (p.empty || p.winRate == null ? '' : p.winRate.toFixed(1) + '%') + '</div></div>' +
+      '<div class="stat"><span class="label">Rank</span><div class="mini-plate" style="font-weight:700">' + (p.empty || p.rank == null ? '' : p.rank) + '</div></div>' +
+      '<div class="stat"><span class="label">Rating</span>' + (hasRating ?
+        '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span></div>'
+        : '<div class="mini-plate no-rating">\u2014</div>') +
       '</div>' +
       '</div>' +
       '</div>';
   }
 
-  document.getElementById('playersTable').innerHTML = players.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
-  document.getElementById('playersCards').innerHTML = players.map(cardHtml).join('');
+  function renderRoster(roster) {
+    document.getElementById('playersTable').innerHTML = roster.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
+    document.getElementById('playersCards').innerHTML = roster.map(cardHtml).join('');
+  }
+
+  function renderTournamentInfo(t) {
+    document.getElementById('tCategory').textContent = t.category || '\u2014';
+    document.getElementById('tDate').textContent = t.date || '\u2014';
+    document.getElementById('tCapacity').textContent = t.capacity;
+    document.getElementById('tFreeSlots').textContent = t.freeSlots != null ? t.freeSlots : t.capacity;
+    document.getElementById('tBall').src = 'icons/' + (BALL_BY_CATEGORY[t.category] || 'ball-series.png');
+    document.getElementById('telegramBtn').href = TELEGRAM_URL;
+  }
+
+  var id = null;
+  try { id = new URLSearchParams(location.search).get('id'); } catch (e) {}
+
+  if (!id) {
+    document.getElementById('playersTable').innerHTML = '<div class="empty-state">No tournament selected.</div>';
+  } else {
+    Promise.all([
+      fetch('/api/tournaments/' + encodeURIComponent(id)).then(function (r) { return r.ok ? r.json() : null; }),
+      fetch('/api/tournaments/' + encodeURIComponent(id) + '/roster').then(function (r) { return r.ok ? r.json() : []; }),
+    ]).then(function (results) {
+      var t = results[0], roster = results[1];
+      if (!t) throw new Error('Tournament not found');
+      renderTournamentInfo(t);
+      renderRoster(Array.isArray(roster) ? roster : []);
+    }).catch(function (err) {
+      console.error('Failed to load tournament detail:', err);
+      document.getElementById('playersTable').innerHTML = '<div class="empty-state">Could not load this tournament.</div>';
+    });
+  }
 })();
 </script>
 </body>

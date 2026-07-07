@@ -5,7 +5,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Main backend URL (set via Railway service variables)
-const API_BASE = process.env.MAIN_API_URL || "https://ttcbeograd.up.railway.app";
+let API_BASE = process.env.MAIN_API_URL || "https://ttcb-admin.up.railway.app";
+if (!/^https?:\/\//i.test(API_BASE)) {
+  console.warn(`⚠️  MAIN_API_URL ("${API_BASE}") is missing "https://" - adding it automatically. Fix the Railway variable to avoid relying on this.`);
+  API_BASE = "https://" + API_BASE;
+}
+API_BASE = API_BASE.replace(/\/+$/, ""); // strip trailing slash(es)
 
 if (typeof fetch !== "function") {
   // Node 18+ ships a global fetch. If this ever runs on an older runtime,
