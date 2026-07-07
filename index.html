@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TTCB Rating</title>
+<link rel="icon" href="/icons/logo.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: 'PT Root UI'; src: url('/fonts/pt-root-ui_light.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'PT Root UI'; src: url('/fonts/pt-root-ui_regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'PT Root UI'; src: url('/fonts/pt-root-ui_medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'PT Root UI'; src: url('/fonts/pt-root-ui_bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'PT Root UI', system-ui, sans-serif; background: #F0F0F0; min-height: 100vh; color: #1A1A1A; padding: 20px 24px 32px; }
+input { font-size: 16px; }
+
+/* Desktop table */
+[data-table] { background: #fff; border-radius: 20px; overflow: hidden; }
+.trow { display: grid; grid-template-columns: 96px minmax(0,1fr) 90px 90px 90px; column-gap: 8px; align-items: center; padding: 15px 24px; }
+.trow:not(:first-child) { border-top: 1px solid #F0F0F0; }
+.trow:not(.header):hover { background: #FAFAFA; cursor: pointer; }
+.trow.header { color: #999; font-size: 14px; padding: 14px 24px; }
+.col-rank { display: flex; align-items: center; gap: 8px; }
+.rank-num { font-size: 16px; font-weight: 700; }
+.rank-change { display: inline-flex; align-items: center; gap: 3px; font-size: 13px; font-weight: 500; }
+.rank-change.up { color: #5AAD32; }
+.rank-change.down { color: #ED6455; }
+.col-name { font-size: 16px; font-weight: 500; }
+.col-num { font-size: 15px; color: #666; }
+.col-rating { font-size: 16px; font-weight: 500; color: #F74A96; display: flex; align-items: center; gap: 6px; }
+.col-rating.none { color: #999; font-weight: 400; font-size: 14px; }
+
+/* Mobile cards */
+[data-cards] { display: none; flex-direction: column; gap: 12px; }
+.mcard { background: #fff; border-radius: 20px; padding: 20px; text-decoration: none; color: inherit; display: block; transition: background 0.15s ease; }
+.mcard:hover { background: #F7F7F7; }
+.mcard-top { margin-bottom: 16px; }
+.mcard-rank-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.mcard-rank { font-size: 16px; font-weight: 700; }
+.mcard-name { font-size: 17px; font-weight: 600; }
+.mcard-meta { color: #999; font-size: 13px; margin-bottom: 4px; }
+.mcard-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.mcard-stat { display: flex; flex-direction: column; gap: 8px; }
+.mcard-stat-label { font-size: 13px; color: #999; }
+.mcard-stat-val { background: #F5F5F5; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 400; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; }
+.mcard-stat-val.pink { color: #F74A96; font-weight: 500; }
+.mcard-stat-val.none { color: #999; font-size: 13px; }
+
+/* Divider between top10 and rest */
+.list-divider { height: 12px; }
+
+/* Search */
+.search-wrap { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid #EAEAEA; border-radius: 12px; padding: 0 16px; height: 48px; width: 360px; }
+.search-wrap input { flex: 1; border: none; outline: none; background: transparent; font-family: inherit; font-size: 16px; color: #1A1A1A; min-width: 0; }
+
+/* Heading row */
+.head-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 40px; max-width: 748px; margin-left: auto; margin-right: auto; }
+.head-title { display: flex; align-items: center; gap: 16px; }
+.head-icon { width: 36px; height: 36px; border-radius: 13px; background: #1A1A1A; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.head-h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+
+/* Footer */
+.footer { max-width: 900px; margin: 56px auto 0; background: #fff; border-radius: 20px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
+.footer-right { display: flex; align-items: center; gap: 40px; font-size: 14px; color: #666; }
+
+/* Skeleton */
+.skeleton { background: linear-gradient(90deg, #ebebeb 25%, #f5f5f5 50%, #ebebeb 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
+@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+@media (max-width: 768px) {
+  body { padding: 8px 8px 32px; }
+  [data-table] { display: none !important; }
+  [data-cards] { display: flex !important; }
+  .head-row { flex-direction: column; align-items: stretch; gap: 16px; margin-bottom: 24px; }
+  .search-wrap { width: 100%; height: 52px; border-radius: 16px; }
+  .head-h1 { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+<div data-page="" data-menu="closed">
+  <div id="nav-container"></div>
+
+  <div style="max-width:748px;margin:48px auto 0;" id="main-content">
+
+    <!-- Heading + search -->
+    <div class="head-row">
+      <div class="head-title">
+        <div class="head-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3ZM18 11.5C17.7239 11.5 17.5 11.7239 17.5 12C17.5 15.0376 15.0376 17.5 12 17.5C11.7239 17.5 11.5 17.7239 11.5 18C11.5 18.2761 11.7239 18.5 12 18.5C15.5898 18.5 18.5 15.5898 18.5 12C18.5 11.7239 18.2761 11.5 18 11.5Z" fill="#fff"/></svg>
+        </div>
+        <h1 class="head-h1">TTCB Rating</h1>
+      </div>
+      <div class="search-wrap">
+        <img src="/icons/search.svg" width="18" height="18" alt="" style="opacity:.4;flex:0 0 auto;">
+        <input type="text" id="search-input" placeholder="Player search">
+      </div>
+    </div>
+
+    <!-- Desktop table -->
+    <div data-table="" id="desktop-table">
+      <div class="trow header">
+        <div>Rank</div><div>Player</div><div>Tournaments</div><div>Win rate</div><div>Rating</div>
+      </div>
+      <div id="desktop-rows"></div>
+    </div>
+
+    <!-- Mobile cards -->
+    <div data-cards="" id="mobile-cards"></div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <img src="/icons/logo-footer.svg" width="40" height="40" alt="TTCB" style="display:block;">
+    <div class="footer-right">
+      <span>Table Tennis Club Beograd</span>
+      <span>2026</span>
+    </div>
+  </div>
+</div>
+
+<script src="/nav.js"></script>
+<script>
+renderNav('rating');
+
+const ARROW_UP = `<svg width="14" height="14" viewBox="0 0 14 12" fill="none"><path d="M3.4 0.7L0.2 6.2C0.07 6.44 0 6.71 0 6.99C0 7.83 0.67 8.5 1.5 8.5H12.5C13.33 8.5 14 7.83 14 6.99C14 6.71 13.93 6.44 13.8 6.2L10.6 0.7C10.3 0.27 9.82 0 9.3 0H4.7C4.18 0 3.7 0.27 3.4 0.7Z" fill="#5AAD32"/></svg>`;
+const ARROW_DOWN = `<svg width="14" height="14" viewBox="0 0 14 12" fill="none"><path d="M3.4 7.8L0.2 2.3C0.07 2.06 0 1.79 0 1.51C0 0.67 0.67 0 1.5 0H12.5C13.33 0 14 0.67 14 1.51C14 1.79 13.93 2.06 13.8 2.3L10.6 7.8C10.3 8.23 9.82 8.5 9.3 8.5H4.7C4.18 8.5 3.7 8.23 3.4 7.8Z" fill="#ED6455"/></svg>`;
+
+let allPlayers = [];
+let query = '';
+
+function winRate(p) {
+  const total = (p.won || 0) + (p.lost || 0);
+  if (!total) return null;
+  return ((p.won || 0) / total * 100).toFixed(1) + '%';
+}
+
+function sorted(players) {
+  return [...players].sort((a, b) => {
+    if (a.rating == null && b.rating == null) return 0;
+    if (a.rating == null) return 1;
+    if (b.rating == null) return -1;
+    return b.rating - a.rating;
+  });
+}
+
+function matches(p) {
+  if (!query) return true;
+  return (p.name || '').toLowerCase().includes(query) ||
+    String(p.clubId || '').includes(query);
+}
+
+function renderDesktop(players) {
+  const rows = document.getElementById('desktop-rows');
+  const ranked = sorted(players).filter(matches);
+  rows.innerHTML = '';
+  const top = ranked.slice(0, 10);
+  const rest = ranked.slice(10);
+  [top, rest].forEach((group, gi) => {
+    group.forEach((p, i) => {
+      const rank = gi === 0 ? i + 1 : 10 + i + 1;
+      const wr = winRate(p);
+      const div = document.createElement('div');
+      div.className = 'trow';
+      div.innerHTML = `
+        <div class="col-rank">
+          <span class="rank-num">${rank}</span>
+          ${p.trend === 'up' ? `<span class="rank-change up">${ARROW_UP}&nbsp;2</span>` : p.trend === 'down' ? `<span class="rank-change down">${ARROW_DOWN}&nbsp;2</span>` : ''}
+        </div>
+        <div class="col-name">${esc(p.name || '—')}</div>
+        <div class="col-num">${p.tournaments || 0}</div>
+        <div class="col-num">${wr || '—'}</div>
+        <div class="col-rating${p.rating == null ? ' none' : ''}">
+          ${p.rating != null ? `${p.rating} ${p.trend === 'up' ? ARROW_UP : p.trend === 'down' ? ARROW_DOWN : ''}` : 'No rating'}
+        </div>`;
+      div.addEventListener('click', () => { location.href = '/player.html?id=' + encodeURIComponent(p.id); });
+      rows.appendChild(div);
+    });
+    if (gi === 0 && rest.length && !query) {
+      const sep = document.createElement('div');
+      sep.style.cssText = 'height:1px;background:#F0F0F0;';
+      rows.appendChild(sep);
+    }
+  });
+}
+
+function renderMobile(players) {
+  const cards = document.getElementById('mobile-cards');
+  const ranked = sorted(players).filter(matches);
+  cards.innerHTML = '';
+  ranked.forEach((p, i) => {
+    const rank = i + 1;
+    const wr = winRate(p);
+    const a = document.createElement('a');
+    a.className = 'mcard';
+    a.href = '/player.html?id=' + encodeURIComponent(p.id);
+    a.innerHTML = `
+      <div class="mcard-top">
+        <div class="mcard-rank-row">
+          <span class="mcard-meta">Rank</span>
+          <span class="mcard-rank">${rank}</span>
+          ${p.trend === 'up' ? `<span class="rank-change up">${ARROW_UP}&nbsp;2</span>` : p.trend === 'down' ? `<span class="rank-change down">${ARROW_DOWN}&nbsp;2</span>` : ''}
+        </div>
+        <div class="mcard-meta" style="margin-bottom:4px;">Player</div>
+        <div class="mcard-name">${esc(p.name || '—')}</div>
+      </div>
+      <div class="mcard-bottom">
+        <div class="mcard-stat">
+          <div class="mcard-stat-label">Tournaments</div>
+          <div class="mcard-stat-val">${p.tournaments || 0}</div>
+        </div>
+        <div class="mcard-stat">
+          <div class="mcard-stat-label">Win rate</div>
+          <div class="mcard-stat-val">${wr || '—'}</div>
+        </div>
+        <div class="mcard-stat">
+          <div class="mcard-stat-label">Rating</div>
+          <div class="mcard-stat-val ${p.rating == null ? 'none' : 'pink'}">
+            ${p.rating != null ? `${p.rating}&nbsp;${p.trend === 'up' ? ARROW_UP : p.trend === 'down' ? ARROW_DOWN : ''}` : 'No rating'}
+          </div>
+        </div>
+      </div>`;
+    cards.appendChild(a);
+  });
+}
+
+function render() { renderDesktop(allPlayers); renderMobile(allPlayers); }
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+document.getElementById('search-input').addEventListener('input', e => {
+  query = e.target.value.trim().toLowerCase();
+  render();
+});
+
+fetch('/api/players')
+  .then(r => r.json())
+  .then(data => { allPlayers = data; render(); })
+  .catch(() => {
+    document.getElementById('desktop-rows').innerHTML = '<div style="padding:24px;color:#999;text-align:center;">Failed to load players</div>';
+  });
+</script>
+</body>
+</html>
