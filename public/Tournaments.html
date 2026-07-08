@@ -177,8 +177,7 @@
     var s = styleFor(t.category);
     var detailHref = 'Tournament_Detail.html?id=' + encodeURIComponent(t.id);
     var free = t.freeSlots != null ? t.freeSlots : t.capacity;
-    return '<div style="font-size:14px;color:#999999;margin-bottom:8px;">' + t.category + ' Scheduled</div>' +
-      '<div class="trow sched-row">' +
+    return '<div class="trow sched-row">' +
       '<div class="tourn-card" style="background:' + s.bg + '">' +
       '<div class="tourn-card-body">' +
       '<div class="tourn-title" style="color:' + s.fg + '">' + t.category + '</div>' +
@@ -195,7 +194,7 @@
       '</div>' +
       '<div class="action-card-mobile">' +
       '<div class="spots-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="spots-label">Available spots</span><span class="spots-val">' + free + '</span></div>' +
-      '<a href="' + detailHref + '" class="join-btn join-btn-mobile">Join the Tournament' +
+      '<a href="' + detailHref + '" class="join-btn" style="width:100%;box-sizing:border-box;justify-content:center;">Join the Tournament' +
       '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 12H6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.8589 5.3176L19.5413 12L12.8589 18.6824" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
       '</div>' +
       '</div>';
