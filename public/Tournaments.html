@@ -177,7 +177,8 @@
     var s = styleFor(t.category);
     var detailHref = 'Tournament_Detail.html?id=' + encodeURIComponent(t.id);
     var free = t.freeSlots != null ? t.freeSlots : t.capacity;
-    return '<div class="trow sched-row">' +
+    return '<div style="font-size:14px;color:#999999;margin-bottom:8px;">' + t.category + ' Scheduled</div>' +
+      '<div class="trow sched-row">' +
       '<div class="tourn-card" style="background:' + s.bg + '">' +
       '<div class="tourn-card-body">' +
       '<div class="tourn-title" style="color:' + s.fg + '">' + t.category + '</div>' +
