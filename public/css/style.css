@@ -298,8 +298,8 @@ input::placeholder { color: #999999; opacity: 1; }
 .profile-id-pill { color: #4D4D4D; flex-shrink: 0; }
 .stat-group { display: flex; gap: 12px; flex-wrap: wrap; }
 .stat-block { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
-.stat-block .label { font-size: 14px; font-weight: 400; color: #999999; }
-.stat-pill { background: #F5F5F5; border-radius: 12px; padding: 12px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100px; height: 48px; box-sizing: border-box; white-space: nowrap; }
+.stat-block .label { font-size: 12px; font-weight: 400; color: #999999; }
+.stat-pill { background: #F5F5F5; border-radius: 12px; padding: 12px 18px; display: inline-flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100px; height: 48px; box-sizing: border-box; white-space: nowrap; }
 .stat-pill .val { font-size: 18px; font-weight: 500; color: #F74A96; }
 .stat-pill .rank-val { font-size: 18px; font-weight: 500; color: #1A1A1A; }
 
