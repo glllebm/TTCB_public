@@ -130,6 +130,41 @@
 <script src="js/main.js"></script>
 <script>
 (function () {
+  // ---- Inject skeletons immediately ----
+  (function () {
+    function skTournCard() {
+      return '<div class="tourn-card-body">' +
+        '<span class="skeleton" style="display:block;height:24px;border-radius:6px;width:60%;margin-bottom:14px"></span>' +
+        '<div class="tourn-card-meta">' +
+        '<div class="meta-line"><span class="skeleton" style="display:block;height:16px;border-radius:4px;width:65%"></span></div>' +
+        '<div class="meta-line"><span class="skeleton" style="display:block;height:16px;border-radius:4px;width:45%"></span></div>' +
+        '</div></div>';
+    }
+    var sched =
+      '<div class="trow sched-row">' +
+      '<div class="tourn-card">' + skTournCard() + '</div>' +
+      '<div class="action-card">' +
+      '<div class="skeleton" style="height:48px;border-radius:16px;width:70%"></div>' +
+      '<div class="skeleton" style="height:20px;border-radius:4px;width:50%"></div>' +
+      '</div>' +
+      '<div class="action-card-mobile">' +
+      '<div class="skeleton" style="height:20px;border-radius:4px;width:50%"></div>' +
+      '<div class="skeleton" style="height:48px;border-radius:16px;margin-top:12px"></div>' +
+      '</div></div>';
+    document.getElementById('scheduledList').innerHTML = sched;
+    function skCompleted() {
+      return '<div class="trow">' +
+        '<div class="tourn-card">' + skTournCard() + '</div>' +
+        '<div class="leaderboard-card">' +
+        '<div class="skeleton" style="height:20px;border-radius:4px"></div>' +
+        '<div class="skeleton" style="height:20px;border-radius:4px;margin-top:12px"></div>' +
+        '<div class="skeleton" style="height:20px;border-radius:4px;margin-top:12px"></div>' +
+        '</div></div>';
+    }
+    var comp = skCompleted() + skCompleted();
+    document.getElementById('completedList').innerHTML = comp;
+  })();
+
   // ---- Per-category visual style (kept from the original design mock) ----
   var STYLES = {
     'League Series':  { bg: '#F0F0F0', fg: '#1A1A1A', labelColor: '#999999', iconFilter: 'none', ball: 'ball-series.png' },
@@ -210,8 +245,9 @@
     })
     .catch(function (err) {
       console.error('Failed to load tournaments from /api/tournaments:', err);
-      document.getElementById('scheduledList').innerHTML = '<div class="empty-state">Could not load tournaments.</div>';
-      document.getElementById('completedList').innerHTML = '';
+      var errHtml = '<div style="padding:24px;text-align:center;color:#ED6455;font-size:15px;font-weight:500;">Could not load tournaments. Please try again later.</div>';
+      document.getElementById('scheduledList').innerHTML = errHtml;
+      document.getElementById('completedList').innerHTML = errHtml;
     });
 })();
 </script>

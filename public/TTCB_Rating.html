@@ -140,32 +140,39 @@
 <script src="js/main.js"></script>
 <script>
 (function () {
-  // ---- Fallback demo data, used ONLY if the API call below fails ----
-  // (kept so the page still renders something during local/offline preview)
-  function mk(rank, changeDir, ratingDir) {
-    return {
-      id: rank, rank: rank, name: 'Nurgaleev Eduard',
-      tournaments: ratingDir === null ? '' : '3',
-      winRate: ratingDir === null ? '' : '85.7%',
-      rating: ratingDir === null ? '' : '2048',
-      hasRating: ratingDir !== null,
-      changeDir: changeDir, changeVal: '2',
-      ratingDir: ratingDir,
-    };
-  }
-  function buildMockData() {
-    var top = [];
-    for (var i = 1; i <= 10; i++) { var dir = (i === 2) ? 'down' : 'up'; top.push(mk(i, dir, dir)); }
-    var rest = [];
-    for (var i = 11; i <= 20; i++) {
-      var cd, rd;
-      if (i === 20) { cd = null; rd = null; }
-      else if (i === 12) { cd = 'down'; rd = 'up'; }
-      else { cd = 'up'; rd = 'up'; }
-      rest.push(mk(i, cd, rd));
+  // ---- Inject skeletons immediately so first paint is never blank ----
+  (function () {
+    function skRow(first) {
+      return (first ? '' : '<div class="row-divider"></div>') +
+        '<div class="rating-row" style="pointer-events:none">' +
+        '<div class="rank-cell"><span class="skeleton" style="display:inline-block;width:24px;height:16px;border-radius:4px"></span></div>' +
+        '<span class="skeleton" style="display:block;height:16px;border-radius:4px;width:50%"></span>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '</div>';
     }
-    return { top: top, rest: rest };
-  }
+    var top = '', rest = '';
+    for (var i = 0; i < 10; i++) top += skRow(i === 0);
+    for (var i = 0; i < 5; i++) rest += skRow(i === 0);
+    document.getElementById('topCard').innerHTML = top;
+    document.getElementById('restCard').innerHTML = rest;
+    function skCard() {
+      return '<div class="player-card" style="pointer-events:none">' +
+        '<div class="player-card-top">' +
+        '<div class="player-card-line"><span class="label">Rank</span><span class="skeleton" style="display:inline-block;width:40px;height:20px;border-radius:4px"></span></div>' +
+        '<div class="player-card-line"><span class="label">Player</span><span class="skeleton" style="display:block;height:20px;border-radius:4px;width:60%"></span></div>' +
+        '</div>' +
+        '<div class="player-card-stats">' +
+        '<div class="stat"><span class="label">Tournaments</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '<div class="stat"><span class="label">Win rate</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '<div class="stat"><span class="label">Rating</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '</div></div>';
+    }
+    var cards = '';
+    for (var i = 0; i < 10; i++) cards += skCard();
+    document.getElementById('playerCards').innerHTML = cards;
+  })();
 
   // ---- Map a player object from GET /api/players into the shape rowHtml/cardHtml expect ----
   function normalize(p) {
@@ -242,9 +249,11 @@
       render(sorted.slice(0, 10), sorted.slice(10));
     })
     .catch(function (err) {
-      console.error('Failed to load players from /api/players, showing demo data instead:', err);
-      var mock = buildMockData();
-      render(mock.top, mock.rest);
+      console.error('Failed to load players from /api/players:', err);
+      var errHtml = '<div style="padding:32px;text-align:center;color:#ED6455;font-size:15px;font-weight:500;">Could not load the rating. Please try again later.</div>';
+      document.getElementById('topCard').innerHTML = errHtml;
+      document.getElementById('restCard').innerHTML = '';
+      document.getElementById('playerCards').innerHTML = errHtml;
     });
 })();
 </script>

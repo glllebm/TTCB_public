@@ -317,6 +317,17 @@ input::placeholder { color: #999999; opacity: 1; }
 .equip-item .label { font-size: 12px; font-weight: 400; color: #999999; }
 .equip-item .val { font-size: 18px; font-weight: 500; color: #1A1A1A; }
 
+/* ============ SKELETON LOADING ============ */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.skeleton {
+  background: #E0E0E0;
+  border-radius: 6px;
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+}
+
 /* ============ RESPONSIVE ============ */
 @media (max-width: 768px) {
   .nav-desktop { display: none !important; }

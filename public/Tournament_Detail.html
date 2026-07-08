@@ -110,16 +110,16 @@
     <div class="detail-row">
       <div class="tourn-card" id="tCard">
         <div class="tourn-card-body">
-          <div class="tourn-title" id="tCategory">\u2014</div>
+          <div class="tourn-title" id="tCategory"><span class="skeleton" style="display:inline-block;width:140px;height:22px;border-radius:6px;vertical-align:middle"></span></div>
           <div class="tourn-card-meta">
-            <div class="meta-line"><img src="icons/calendar.svg" width="16" height="16" alt=""><span class="meta-label">Date</span><span class="meta-val" id="tDate">\u2014</span></div>
-            <div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="meta-label">Players</span><span class="meta-val" id="tCapacity">\u2014</span></div>
+            <div class="meta-line"><img src="icons/calendar.svg" width="16" height="16" alt=""><span class="meta-label">Date</span><span class="meta-val" id="tDate"><span class="skeleton" style="display:inline-block;width:80px;height:14px;border-radius:4px;vertical-align:middle"></span></span></div>
+            <div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="meta-label">Players</span><span class="meta-val" id="tCapacity"><span class="skeleton" style="display:inline-block;width:30px;height:14px;border-radius:4px;vertical-align:middle"></span></span></div>
           </div>
         </div>
         <img class="tourn-ball" src="icons/ball-series.png" alt="" id="tBall">
       </div>
       <div class="spots-card">
-        <div class="spots-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="spots-label">Available spots</span><span class="spots-val" id="tFreeSlots">\u2014</span></div>
+        <div class="spots-line"><img src="icons/players.svg" width="16" height="16" alt=""><span class="spots-label">Available spots</span><span class="spots-val" id="tFreeSlots"><span class="skeleton" style="display:inline-block;width:30px;height:16px;border-radius:4px;vertical-align:middle"></span></span></div>
       </div>
     </div>
 
@@ -168,6 +168,40 @@
 <script src="js/main.js"></script>
 <script>
 (function () {
+  // ---- Inject skeletons immediately ----
+  (function () {
+    function skTableRow(first) {
+      return (first ? '' : '<div class="row-divider"></div>') +
+        '<div class="detail-table-row detail-row-item">' +
+        '<span class="skeleton" style="display:inline-block;width:20px;height:16px;border-radius:4px"></span>' +
+        '<span class="skeleton" style="display:block;height:16px;border-radius:4px;width:55%"></span>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '<div class="skeleton" style="height:40px;border-radius:12px"></div>' +
+        '</div>';
+    }
+    var tableRows = '';
+    for (var i = 0; i < 8; i++) tableRows += skTableRow(i === 0);
+    document.getElementById('playersTable').innerHTML = tableRows;
+    function skMobileCard() {
+      return '<div class="detail-card-item">' +
+        '<div>' +
+        '<div class="card-line"><span class="label">№</span><span class="skeleton" style="display:inline-block;width:20px;height:16px;border-radius:4px"></span></div>' +
+        '<div class="card-line"><span class="label">Player</span><span class="skeleton" style="display:block;height:16px;border-radius:4px;width:60%"></span></div>' +
+        '</div>' +
+        '<div class="detail-card-stats">' +
+        '<div class="stat"><span class="label">Tournaments</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '<div class="stat"><span class="label">Win rate</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '<div class="stat"><span class="label">Rank</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '<div class="stat"><span class="label">Rating</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
+        '</div></div>';
+    }
+    var mobileCards = '';
+    for (var i = 0; i < 8; i++) mobileCards += skMobileCard();
+    document.getElementById('playersCards').innerHTML = mobileCards;
+  })();
+
   // TODO: set your real club Telegram chat link here.
   var TELEGRAM_URL = 'https://t.me/';
 
@@ -233,7 +267,9 @@
   try { id = new URLSearchParams(location.search).get('id'); } catch (e) {}
 
   if (!id) {
-    document.getElementById('playersTable').innerHTML = '<div class="empty-state">No tournament selected.</div>';
+    var noIdErr = '<div style="padding:24px;text-align:center;color:#ED6455;font-size:15px;font-weight:500;">No tournament selected.</div>';
+    document.getElementById('playersTable').innerHTML = noIdErr;
+    document.getElementById('playersCards').innerHTML = noIdErr;
   } else {
     Promise.all([
       fetch('/api/tournaments/' + encodeURIComponent(id)).then(function (r) { return r.ok ? r.json() : null; }),
@@ -245,7 +281,12 @@
       renderRoster(Array.isArray(roster) ? roster : []);
     }).catch(function (err) {
       console.error('Failed to load tournament detail:', err);
-      document.getElementById('playersTable').innerHTML = '<div class="empty-state">Could not load this tournament.</div>';
+      var errHtml = '<div style="padding:24px;text-align:center;color:#ED6455;font-size:15px;font-weight:500;">Could not load this tournament. Please try again later.</div>';
+      document.getElementById('playersTable').innerHTML = errHtml;
+      document.getElementById('playersCards').innerHTML = errHtml;
+      ['tCategory', 'tDate', 'tCapacity', 'tFreeSlots'].forEach(function (id) {
+        document.getElementById(id).textContent = '—';
+      });
     });
   }
 })();
