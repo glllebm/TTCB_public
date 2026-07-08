@@ -144,7 +144,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .player-name { font-size: 15px; font-weight: 500; color: #1A1A1A; }
 .plate {
   display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 12px;
-  font-size: 14px; font-weight: 400; color: #1A1A1A; background: #F7F7F7;
+  font-size: 14px; font-weight: 500; color: #1A1A1A; background: #F7F7F7;
 }
 .plate.no-rating { color: #999999; }
 .rating-plate {
@@ -269,7 +269,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .detail-row-item { padding: 15px 12px; margin: 0 -12px; border-radius: 14px; }
 .detail-row-item .num { font-size: 16px; font-weight: 700; color: #1A1A1A; }
 .detail-row-item .name { font-size: 15px; font-weight: 500; }
-.plate.rank-plate { font-weight: 700; }
+.plate.rank-plate { font-weight: 500; }
 
 .detail-cards { display: none; flex-direction: column; gap: 8px; }
 .detail-card-item {
@@ -301,7 +301,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .stat-block .label { font-size: 14px; font-weight: 400; color: #999999; }
 .stat-pill { background: #F5F5F5; border-radius: 12px; padding: 12px 18px; display: inline-flex; align-items: center; gap: 8px; width: auto; white-space: nowrap; }
 .stat-pill .val { font-size: 20px; font-weight: 500; color: #F74A96; }
-.stat-pill .rank-val { font-size: 20px; font-weight: 700; color: #1A1A1A; }
+.stat-pill .rank-val { font-size: 20px; font-weight: 500; color: #1A1A1A; }
 
 .stat-row3 { display: flex; gap: 12px; flex-direction: row; width: 100%; align-items: stretch; }
 .stat-col { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; flex: 1; min-width: 0; }
