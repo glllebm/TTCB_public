@@ -220,7 +220,16 @@
       if (!p) throw new Error('No data');
       document.getElementById('pName').textContent = p.name;
       document.getElementById('pId').textContent = p.clubId != null ? p.clubId : p.id;
-      document.getElementById('pRating').textContent = p.rating != null ? p.rating : '\u2014';
+      var pRatingEl = document.getElementById('pRating');
+      if (p.rating != null) {
+        pRatingEl.textContent = p.rating;
+        pRatingEl.style.fontSize = '';
+        pRatingEl.style.color = '';
+      } else {
+        pRatingEl.textContent = 'No rating';
+        pRatingEl.style.fontSize = '16px';
+        pRatingEl.style.color = '#999999';
+      }
       document.getElementById('pRatingArrow').src = 'icons/' + (p.trend === 'down' ? 'arrow-down.svg' : 'arrow-up.svg');
       document.getElementById('pRatingArrow').style.display = p.rating == null ? 'none' : '';
       document.getElementById('pRank').textContent = p.rank != null ? p.rank : '\u2014';
@@ -244,7 +253,7 @@
       document.getElementById('pWins').textContent = p.won || 0;
       document.getElementById('pWLSep').textContent = '-';
       document.getElementById('pLosses').textContent = p.lost || 0;
-      document.getElementById('pWinRate').textContent = typeof p.winRate === 'number' ? p.winRate.toFixed(2) + '%' : '\u2014';
+      document.getElementById('pWinRate').textContent = typeof p.winRate === 'number' ? p.winRate.toFixed(2) + '%' : '';
       document.getElementById('pAge').textContent = typeof p.age === 'number' ? p.age + ' years' : '';
       document.getElementById('pHand').textContent = p.hand === 'left' ? 'Left hand' : p.hand === 'right' ? 'Right hand' : '\u2014';
       document.getElementById('pBlade').textContent = p.blade || '\u2014';
