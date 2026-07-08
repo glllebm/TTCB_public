@@ -146,7 +146,7 @@ input::placeholder { color: #999999; opacity: 1; }
   display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 12px;
   font-size: 14px; font-weight: 400; color: #1A1A1A; background: #F7F7F7;
 }
-.plate.no-rating { background: #FFFFFF; color: #999999; }
+.plate.no-rating { color: #999999; }
 .rating-plate {
   display: flex; align-items: center; justify-content: space-between; height: 40px; padding: 0 14px;
   border-radius: 12px; background: #F7F7F7;
