@@ -169,7 +169,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .player-card-stats .stat .label { font-size: 13px; font-weight: 400; color: #999999; }
 .mini-plate {
   display: flex; align-items: center; justify-content: center; background: #F5F5F5; border-radius: 10px;
-  padding: 8px 16px; font-size: 15px; font-weight: 400; color: #1A1A1A; height: 40px; box-sizing: border-box;
+  padding: 8px 16px; font-size: 15px; font-weight: 500; color: #1A1A1A; height: 40px; box-sizing: border-box;
 }
 .mini-plate.no-rating { color: #999999; }
 .mini-rating-plate {

@@ -247,7 +247,7 @@
       '<div class="detail-card-stats">' +
       '<div class="stat"><span class="label">Tournaments</span><div class="mini-plate">' + (p.empty ? '' : (p.tournaments || 0)) + '</div></div>' +
       '<div class="stat"><span class="label">Win rate</span><div class="mini-plate">' + (p.empty || p.winRate == null ? '' : p.winRate.toFixed(1) + '%') + '</div></div>' +
-      '<div class="stat"><span class="label">Rank</span><div class="mini-plate" style="font-weight:700">' + (p.empty || p.rank == null ? '' : p.rank) + '</div></div>' +
+      '<div class="stat"><span class="label">Rank</span><div class="mini-plate">' + (p.empty || p.rank == null ? '' : p.rank) + '</div></div>' +
       '<div class="stat"><span class="label">Rating</span>' + (hasRating ?
         '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span></div>'
         : '<div class="mini-plate no-rating">No rating</div>') +
