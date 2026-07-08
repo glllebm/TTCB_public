@@ -239,7 +239,7 @@ input::placeholder { color: #999999; opacity: 1; }
   transition: background 0.15s ease; border: 1px solid #E6E6E6EB;
 }
 .back-btn:hover { background: #E0E0E0; }
-.title-row { margin-bottom: 20px; margin-top: 48px; }
+.title-row { margin-bottom: 20px; }
 
 .detail-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #FFFFFF;
@@ -352,7 +352,9 @@ input::placeholder { color: #999999; opacity: 1; }
   .join-btn-mobile { display: flex !important; flex-direction: row; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; align-self: stretch; }
   .page-heading { margin-bottom: 28px !important; }
 
-  .title-row { margin-top: 24px !important; margin-bottom: 16px !important; padding-left: 0; }
+  .content { margin-top: 24px !important; }
+  .profile-content { margin-top: 24px !important; }
+  .title-row { margin-top: 0 !important; margin-bottom: 16px !important; padding-left: 0; }
   .player-name-big { font-size: 22px !important; }
   .name-row-inner { flex-wrap: wrap; }
   .stat-row3 { display: flex !important; gap: 12px !important; flex-wrap: nowrap; }
