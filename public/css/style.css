@@ -341,18 +341,19 @@ input::placeholder { color: #999999; opacity: 1; }
   .player-cards { display: flex !important; }
   .detail-cards { display: flex !important; }
 
-  .head-row { flex-direction: column; align-items: stretch !important; gap: 16px !important; margin-bottom: 24px !important; }
+  .head-row { flex-direction: column; align-items: stretch !important; gap: 24px !important; margin-bottom: 16px !important; }
+  .head-row .page-heading { margin-bottom: 0 !important; }
   .search-box { width: 100% !important; height: 52px !important; border-radius: 16px !important; }
 
   .trow { grid-template-columns: 1fr !important; gap: 12px !important; }
-  .sched-row { margin-bottom: 48px !important; }
+  .sched-row { margin-bottom: 32px !important; }
   .completed-list { gap: 12px !important; }
   .action-card { display: none !important; }
   .action-card-mobile { display: flex !important; flex-direction: column; gap: 12px; background: #F7F7F7; border-radius: 16px; padding: 20px; }
   .join-btn-mobile { display: flex !important; flex-direction: row; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; align-self: stretch; }
-  .page-heading { margin-bottom: 28px !important; }
+  .page-heading { margin-bottom: 24px !important; }
 
-  .content { margin-top: 24px !important; }
+  .content { margin-top: 32px !important; }
   .profile-content { margin-top: 24px !important; }
   .title-row { margin-top: 0 !important; margin-bottom: 16px !important; padding-left: 0; }
   .player-name-big { font-size: 22px !important; }
