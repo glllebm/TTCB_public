@@ -208,7 +208,9 @@
       var rankNum = i + 1;
       return '<div class="leaderboard-row"><div class="dot" style="background:' + (PLACE_DOTS[rankNum] || '#CCCCCC') + '"></div>' +
         '<span class="rank">' + rankNum + '</span><span class="name">' + (p.name || '\u2014') + '</span>' +
-        '<div class="rating-pill"><span>' + (p.rating != null ? p.rating : '\u2014') + '</span></div></div>';
+        '<div class="rating-pill"><span>' + (p.rating != null ? p.rating : '\u2014') + '</span>' +
+        (p.direction === 'up' || p.direction === 'down' ? '<img src="icons/arrow-' + p.direction + '.svg" width="12" height="12" alt="" style="width:14px;height:14px">' : '') +
+        '</div></div>';
     }).join('');
     var actualPlayers = t.filledPlayers != null ? t.filledPlayers : t.capacity;
     return '<div class="trow">' +
