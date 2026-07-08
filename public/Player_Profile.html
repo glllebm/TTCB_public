@@ -167,7 +167,7 @@
     </div>
 
     <!-- Card 4: Equipment -->
-    <div class="equip-card">
+    <div class="equip-card" id="equipCard">
       <div class="equip-item">
         <span class="label">Blade</span>
         <span class="val" id="pBlade"><span class="skeleton" style="display:inline-block;width:180px;height:18px;border-radius:4px;vertical-align:middle"></span></span>
@@ -246,6 +246,9 @@
       document.getElementById('pBlade').textContent = p.blade || '\u2014';
       document.getElementById('pRightRubber').textContent = p.rightRubber || '\u2014';
       document.getElementById('pLeftRubber').textContent = p.leftRubber || '\u2014';
+      if (!p.blade && !p.rightRubber && !p.leftRubber) {
+        document.getElementById('equipCard').style.display = 'none';
+      }
     })
     .catch(function () { showError('Could not load player data. Please try again later.'); });
 })();
