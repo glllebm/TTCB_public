@@ -205,6 +205,13 @@
   // TODO: set your real club Telegram chat link here.
   var TELEGRAM_URL = 'https://t.me/ttcb_chat';
 
+  var STYLES = {
+    'League Series':  { bg: '#F0F0F0', fg: '#1A1A1A', labelColor: '#999999', iconFilter: 'none', ball: 'ball-series.png' },
+    'League Cup':     { bg: '#1F1F1F', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-cup.png' },
+    'League Masters': { bg: 'linear-gradient(135deg, #F74A96, #C3095B)', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-masters.png' },
+  };
+  function styleFor(category) { return STYLES[category] || STYLES['League Series']; }
+
   var BALL_BY_CATEGORY = {
     'League Series': 'ball-series.png',
     'League Cup': 'ball-cup.png',
@@ -255,11 +262,25 @@
   }
 
   function renderTournamentInfo(t) {
-    document.getElementById('tCategory').textContent = t.category || '\u2014';
+    var s = styleFor(t.category);
+    var card = document.getElementById('tCard');
+    card.style.background = s.bg;
+    var categoryEl = document.getElementById('tCategory');
+    categoryEl.textContent = t.category || '\u2014';
+    categoryEl.style.color = s.fg;
+    var metaLines = card.querySelectorAll('.meta-line');
+    metaLines.forEach(function (line) {
+      var img = line.querySelector('img');
+      var label = line.querySelector('.meta-label');
+      var val = line.querySelector('.meta-val');
+      if (img) img.style.filter = s.iconFilter;
+      if (label) label.style.color = s.labelColor;
+      if (val) val.style.color = s.fg;
+    });
     document.getElementById('tDate').textContent = t.date || '\u2014';
     document.getElementById('tCapacity').textContent = t.capacity;
     document.getElementById('tFreeSlots').textContent = t.freeSlots != null ? t.freeSlots : t.capacity;
-    document.getElementById('tBall').src = 'icons/' + (BALL_BY_CATEGORY[t.category] || 'ball-series.png');
+    document.getElementById('tBall').src = 'icons/' + s.ball;
     document.getElementById('telegramBtn').href = TELEGRAM_URL;
   }
 
