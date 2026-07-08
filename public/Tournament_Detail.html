@@ -219,7 +219,7 @@
   };
 
   function ratingCell(p) {
-    if (!p || p.empty || p.rating == null) return '<div class="plate no-rating">\u2014</div>';
+    if (!p || p.empty || p.rating == null) return '<div class="plate no-rating">No rating</div>';
     return '<div class="rating-plate"><span class="val">' + p.rating + '</span></div>';
   }
 
@@ -250,7 +250,7 @@
       '<div class="stat"><span class="label">Rank</span><div class="mini-plate" style="font-weight:700">' + (p.empty || p.rank == null ? '' : p.rank) + '</div></div>' +
       '<div class="stat"><span class="label">Rating</span>' + (hasRating ?
         '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span></div>'
-        : '<div class="mini-plate no-rating">\u2014</div>') +
+        : '<div class="mini-plate no-rating">No rating</div>') +
       '</div>' +
       '</div>' +
       '</div>';
