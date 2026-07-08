@@ -4,7 +4,7 @@
 @font-face { font-family: 'PT Root UI'; src: url('../fonts/pt-root-ui_bold.woff2') format('woff2'), url('../fonts/pt-root-ui_bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; }
+html, body { margin: 0; height: 100%; }
 body {
   font-family: 'PT Root UI', system-ui, sans-serif;
   background: #F0F0F0;
@@ -17,6 +17,8 @@ input::placeholder { color: #999999; opacity: 1; }
 .page {
   min-height: 100vh;
   padding: 20px 24px 32px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ============ NAV ============ */
@@ -89,7 +91,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .overlay-menu-item span { font-size: 20px; font-weight: 500; color: #1A1A1A; }
 
 /* ============ MAIN CONTENT SHARED ============ */
-.content { max-width: 748px; margin: 48px auto 0; }
+.content { max-width: 748px; margin: 48px auto 0; flex: 1; width: 100%; }
 .page-heading { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
 .page-heading .icon-box {
   width: 36px; height: 36px; border-radius: 13px; background: #1A1A1A;
@@ -284,7 +286,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .detail-card-stats .mini-rating-plate { padding: 8px 10px; height: 40px; }
 
 /* ============ PLAYER PROFILE ============ */
-.profile-content { max-width: 444px; margin: 48px auto 0; }
+.profile-content { max-width: 444px; margin: 48px auto 0; flex: 1; width: 100%; }
 .name-row { position: relative; margin-bottom: 24px; }
 .name-row .back-btn { position: absolute; left: -80px; top: 50%; transform: translateY(-50%); text-decoration: none; }
 .name-row-inner { display: flex; align-items: center; gap: 12px; }
