@@ -24,4 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
       lockScroll(false);
     });
   });
+
+  var filename = location.pathname.split('/').pop();
+  if (filename === 'TTCB_Rating.html' || filename === 'Tournaments.html') {
+    document.querySelectorAll('.nav-tab[href="' + filename + '"]').forEach(function (tab) {
+      tab.classList.add('active');
+    });
+  }
 });
