@@ -239,7 +239,7 @@ input::placeholder { color: #999999; opacity: 1; }
   transition: background 0.15s ease; border: 1px solid #E6E6E6EB;
 }
 .back-btn:hover { background: #E0E0E0; }
-.title-row { margin-bottom: 20px; }
+.title-row { margin-bottom: 20px; margin-top: 48px; }
 
 .detail-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #FFFFFF;
@@ -288,8 +288,6 @@ input::placeholder { color: #999999; opacity: 1; }
 
 /* ============ PLAYER PROFILE ============ */
 .profile-content { max-width: 444px; margin: 48px auto 0; flex: 1; width: 100%; }
-.name-row { margin-bottom: 8px; }
-.name-row .back-btn { display: inline-flex; margin-bottom: 12px; text-decoration: none; }
 .player-name-big { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.05; }
 
 .profile-card { background: #FFFFFF; border-radius: 24px; padding: 20px; margin-bottom: 8px; }
@@ -354,12 +352,11 @@ input::placeholder { color: #999999; opacity: 1; }
   .join-btn-mobile { display: flex !important; flex-direction: row; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; align-self: stretch; }
   .page-heading { margin-bottom: 28px !important; }
 
-  .back-btn { position: static !important; transform: none !important; margin-bottom: 20px; }
+  .title-row { margin-top: 24px !important; margin-bottom: 16px !important; padding-left: 0; }
   .player-name-big { font-size: 22px !important; }
   .name-row-inner { flex-wrap: wrap; }
   .stat-row3 { display: flex !important; gap: 12px !important; flex-wrap: nowrap; }
 
-  .title-row { padding-left: 0 !important; }
   .detail-row { grid-template-columns: 1fr !important; }
   .spots-card { min-height: unset !important; }
   .banner { flex-direction: column; align-items: stretch !important; }
