@@ -227,8 +227,8 @@ input::placeholder { color: #999999; opacity: 1; }
 .leaderboard-row .rank { font-size: 15px; font-weight: 700; width: 14px; flex: 0 0 auto; }
 .leaderboard-row .name { font-size: 15px; font-weight: 500; flex: 1; min-width: 0; }
 .leaderboard-row .rating-pill {
-  display: flex; align-items: center; gap: 4px; background: #FFFFFF; border-radius: 10px;
-  padding: 6px 10px; flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center; gap: 4px; background: #FFFFFF; border-radius: 10px;
+  padding: 6px 10px; flex: 0 0 auto; width: 70px; box-sizing: border-box;
 }
 .leaderboard-row .rating-pill span { font-size: 14px; font-weight: 500; color: #F74A96; }
 
