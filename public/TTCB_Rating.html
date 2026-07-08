@@ -178,6 +178,7 @@
   function normalize(p) {
     return {
       id: p.id,
+      clubId: p.clubId,
       rank: p.rank,
       name: p.name,
       tournaments: p.tournaments != null ? p.tournaments : '',
@@ -238,6 +239,31 @@
     document.getElementById('playerCards').innerHTML = all.map(cardHtml).join('');
   }
 
+  var allPlayers = [];
+
+  function matches(p, q) {
+    if (!q) return true;
+    var cid = String(p.clubId || '');
+    var name = (p.name || '').toLowerCase();
+    return name.includes(q) || (q.length >= 4 ? cid.includes(q) : cid === q);
+  }
+
+  function renderFiltered(list) {
+    if (list.length === 0) {
+      var emptyHtml = '<div style="padding:32px;text-align:center;color:#999999;font-size:15px;font-weight:500;">No players found.</div>';
+      document.getElementById('topCard').innerHTML = emptyHtml;
+      document.getElementById('restCard').innerHTML = '';
+      document.getElementById('playerCards').innerHTML = emptyHtml;
+    } else {
+      render(list.slice(0, 10), list.slice(10));
+    }
+  }
+
+  document.getElementById('playerSearch').addEventListener('input', function () {
+    var q = this.value.trim().toLowerCase();
+    renderFiltered(allPlayers.filter(function (p) { return matches(p, q); }));
+  });
+
   fetch('/api/players')
     .then(function (r) {
       if (!r.ok) throw new Error('GET /api/players -> HTTP ' + r.status);
@@ -245,8 +271,8 @@
     })
     .then(function (players) {
       if (!Array.isArray(players) || players.length === 0) throw new Error('GET /api/players returned no players');
-      var sorted = players.map(normalize).sort(function (a, b) { return a.rank - b.rank; });
-      render(sorted.slice(0, 10), sorted.slice(10));
+      allPlayers = players.map(normalize).sort(function (a, b) { return a.rank - b.rank; });
+      render(allPlayers.slice(0, 10), allPlayers.slice(10));
     })
     .catch(function (err) {
       console.error('Failed to load players from /api/players:', err);
