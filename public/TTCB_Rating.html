@@ -234,8 +234,12 @@
 
   function render(top, rest) {
     var all = top.concat(rest);
-    document.getElementById('topCard').innerHTML = top.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
-    document.getElementById('restCard').innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
+    var topEl = document.getElementById('topCard');
+    var restEl = document.getElementById('restCard');
+    topEl.innerHTML = top.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
+    topEl.style.display = top.length === 0 ? 'none' : '';
+    restEl.innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
+    restEl.style.display = rest.length === 0 ? 'none' : '';
     document.getElementById('playerCards').innerHTML = all.map(cardHtml).join('');
   }
 
