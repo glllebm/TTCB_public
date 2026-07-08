@@ -288,14 +288,14 @@ input::placeholder { color: #999999; opacity: 1; }
 
 /* ============ PLAYER PROFILE ============ */
 .profile-content { max-width: 444px; margin: 48px auto 0; flex: 1; width: 100%; }
-.name-row { position: relative; margin-bottom: 24px; }
-.name-row .back-btn { position: absolute; left: -80px; top: 50%; transform: translateY(-50%); text-decoration: none; }
-.name-row-inner { display: flex; align-items: center; gap: 12px; }
-.player-name-big { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin-left: 16px; }
-.player-id { margin-left: 12px; font-size: 16px; font-weight: 400; color: #999999; white-space: nowrap; }
+.name-row { margin-bottom: 24px; }
+.name-row .back-btn { display: block; margin-bottom: 12px; text-decoration: none; }
+.player-name-big { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; }
 
 .profile-card { background: #FFFFFF; border-radius: 24px; padding: 20px; margin-bottom: 12px; }
 .profile-card:last-child { margin-bottom: 0; }
+.profile-name-card { display: flex; align-items: center; gap: 16px; }
+.profile-id-pill { color: #999999; flex-shrink: 0; }
 .stat-group { display: flex; gap: 12px; flex-wrap: wrap; }
 .stat-block { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
 .stat-block .label { font-size: 14px; font-weight: 400; color: #999999; }
