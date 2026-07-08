@@ -351,7 +351,7 @@ input::placeholder { color: #999999; opacity: 1; }
   .completed-list { gap: 12px !important; }
   .action-card { display: none !important; }
   .action-card-mobile { display: flex !important; flex-direction: column; gap: 12px; background: #F7F7F7; border-radius: 16px; padding: 20px; }
-  .join-btn-mobile { display: flex !important; flex-direction: row; align-items: center; justify-content: center; margin-top: 12px; }
+  .join-btn-mobile { display: flex !important; flex-direction: row; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; align-self: stretch; }
   .page-heading { margin-bottom: 28px !important; }
 
   .back-btn { position: static !important; transform: none !important; margin-bottom: 20px; }
