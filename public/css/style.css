@@ -347,6 +347,8 @@ input::placeholder { color: #999999; opacity: 1; }
   .nav-mobile { display: flex !important; }
   .page { padding: 8px 8px 32px !important; }
   .lang-btn { padding: 8px 14px; font-size: 14px; }
+  .lang-toggle { align-self: flex-start; }
+  .overlay-panel > img { margin: 0 0 32px; }
 
   .rating-col-headers, .detail-col-headers { display: none; }
   .rating-row, .rating-card { display: none !important; }
