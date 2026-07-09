@@ -69,7 +69,7 @@
   .header .nav-back:hover { background: #f4f4f4; }
   .header .nav-back svg { display: block; }
 
-  .wrap { max-width: 600px; margin: 48px auto 0; padding: 0 20px; }
+  .wrap { max-width: 600px; margin: 48px auto 0; padding: 0 8px; }
 
   /* ---- page title ---- */
   .page-head { margin: 0 0 30px; }
@@ -110,8 +110,8 @@
     border-radius: 14px;
     padding: 24px 18px;
     display: flex; align-items: center; justify-content: center;
-    flex-wrap: wrap; gap: 12px;
-    font-size: 19px; font-weight: 600; color: var(--ink);
+    gap: 12px; overflow-x: auto;
+    font-size: 19px; font-weight: 600; color: var(--ink); white-space: nowrap;
   }
   .formula .op { color: #b08aa0; font-weight: 600; }
   .formula .delta { font-weight: 700; }
@@ -146,7 +146,7 @@
   .note b { font-weight: 700; color: var(--ink); }
 
   /* ---- table ---- */
-  .tbl-wrap { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .tbl-wrap { border: 1px solid var(--border); border-radius: 14px; overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
   thead th {
     background: #fafafa; text-align: left;
@@ -177,9 +177,10 @@
   .hl { background: linear-gradient(transparent 62%, #fce4f0 62%); font-weight: 600; color: var(--ink); padding: 0 1px; }
 
   @media (max-width: 480px) {
-    .wrap { margin-top: 24px; }
+    .wrap { margin-top: 24px; padding: 0 8px; }
     .card { padding: 18px; }
-    .formula { font-size: 17px; padding: 20px 12px; }
+    .formula { font-size: 14px; padding: 16px 10px; gap: 8px; }
+    .formula .brk { font-size: 30px; }
     .page-head h1 { font-size: 26px; }
     thead th, tbody td { padding: 11px 12px; }
   }
