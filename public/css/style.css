@@ -173,8 +173,8 @@ input::placeholder { color: #999999; opacity: 1; }
 }
 .player-card:hover { background: #FAFAFA; }
 .player-card-top { display: flex; flex-direction: column; gap: 12px; }
-.player-card-line { display: grid; grid-template-columns: 96px 1fr; align-items: center; }
-.player-card-line .label { font-size: 15px; font-weight: 400; color: #999999; }
+.player-card-line { display: grid; grid-template-columns: 64px 1fr; align-items: center; }
+.player-card-line .label { font-size: 15px; font-weight: 400; color: #999999; width: 64px; flex: none; box-sizing: border-box; }
 .player-card-line .val { font-size: 17px; font-weight: 700; color: #1A1A1A; }
 .player-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .player-card-stats .stat { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
