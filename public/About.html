@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
-<title>About club TTCB</title>
+<title data-i18n="about.page.title_tag">About club TTCB</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
   .about-grid { display: grid; grid-template-columns: 1fr 300px; gap: 64px; margin-bottom: 48px; }
@@ -76,11 +76,11 @@
       <div class="nav-tabs">
         <a href="TTCB_Rating.html" class="nav-tab">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3ZM18 11.5C17.7239 11.5 17.5 11.7239 17.5 12C17.5 15.0376 15.0376 17.5 12 17.5C11.7239 17.5 11.5 17.7239 11.5 18C11.5 18.2761 11.7239 18.5 12 18.5C15.5898 18.5 18.5 15.5898 18.5 12C18.5 11.7239 18.2761 11.5 18 11.5Z" fill="currentColor"/></svg>
-          Rating
+          <span data-i18n="shared.nav.rating">Rating</span>
         </a>
         <a href="Tournaments.html" class="nav-tab">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.8114 13.9323C17.2805 13.758 17.8155 13.5823 18.2936 13.4049C18.0988 13.7752 17.9741 14.1858 18.1013 14.528C18.7985 16.4035 19.9845 18.6704 20.0004 18.7008L17.551 19.6112C17.5434 19.5784 16.9614 17.0865 16.2643 15.2108C16.1371 14.8687 15.775 14.6389 15.3857 14.4857C15.8522 14.3108 16.3557 14.1017 16.8114 13.9323ZM12.6329 2.69258C15.6131 1.58483 19.2017 3.70181 20.1269 7.30168C21.3678 12.1302 19.2321 12.2821 16.5657 13.2732C13.8994 14.2643 12.1834 15.5439 9.96931 11.0772C8.31864 7.74715 9.65279 3.80045 12.6329 2.69258Z" fill="currentColor"/><path d="M13.12 16.6257C13.0651 17.0404 13.0897 17.4686 13.3271 17.7458C14.6266 19.2631 16.5194 20.9773 16.5507 21.0056L14.5663 22.7058C14.5475 22.6771 13.1403 20.5399 11.8388 19.0202C11.6012 18.7431 11.1818 18.6527 10.7636 18.6433C11.1507 18.3114 11.5641 17.9288 11.9442 17.6032C12.3134 17.2871 12.7408 16.9486 13.12 16.6257ZM4.14444 8.49582C5.28001 7.52334 6.7877 7.17363 8.28604 7.39426C8.1706 8.76045 8.41739 10.1981 9.07315 11.5212C10.2132 13.8211 11.4114 15.0416 12.9882 15.2155C13.1758 15.2362 13.3607 15.2366 13.5429 15.2282C13.0324 15.8477 12.2746 16.3947 11.4872 17.0691C9.32681 18.9194 8.15739 20.7126 4.538 17.2849C1.83943 14.7291 1.72973 10.5641 4.14444 8.49582ZM9.26846 7.62277C10.6065 8.04783 11.8685 8.93071 12.7685 10.2351C14.0189 12.0476 14.3347 13.2312 14.1132 14.1472C12.6718 14.468 11.429 14.0216 9.96964 11.0778C9.41168 9.95223 9.19608 8.75589 9.26846 7.62277Z" fill="currentColor"/></svg>
-          Tournaments
+          <span data-i18n="shared.nav.tournaments">Tournaments</span>
         </a>
       </div>
     </div>
@@ -90,12 +90,16 @@
     <div class="nav-side right">
       <a href="About.html" class="nav-btn">
         <img src="icons/info.svg" width="16" height="16" alt="">
-        About club
+        <span data-i18n="shared.nav.about_club">About club</span>
       </a>
       <a href="Contact.html" class="nav-btn">
         <img src="icons/at.svg" width="16" height="16" alt="">
-        Contact
+        <span data-i18n="shared.nav.contact">Contact</span>
       </a>
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn" data-lang="en">En</button>
+        <button type="button" class="lang-btn" data-lang="ru">Ru</button>
+      </div>
     </div>
   </div>
 
@@ -112,11 +116,11 @@
       <div class="nav-tabs">
         <a href="TTCB_Rating.html" class="nav-tab">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3ZM18 11.5C17.7239 11.5 17.5 11.7239 17.5 12C17.5 15.0376 15.0376 17.5 12 17.5C11.7239 17.5 11.5 17.7239 11.5 18C11.5 18.2761 11.7239 18.5 12 18.5C15.5898 18.5 18.5 15.5898 18.5 12C18.5 11.7239 18.2761 11.5 18 11.5Z" fill="currentColor"/></svg>
-          Rating
+          <span data-i18n="shared.nav.rating">Rating</span>
         </a>
         <a href="Tournaments.html" class="nav-tab">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.8114 13.9323C17.2805 13.758 17.8155 13.5823 18.2936 13.4049C18.0988 13.7752 17.9741 14.1858 18.1013 14.528C18.7985 16.4035 19.9845 18.6704 20.0004 18.7008L17.551 19.6112C17.5434 19.5784 16.9614 17.0865 16.2643 15.2108C16.1371 14.8687 15.775 14.6389 15.3857 14.4857C15.8522 14.3108 16.3557 14.1017 16.8114 13.9323ZM12.6329 2.69258C15.6131 1.58483 19.2017 3.70181 20.1269 7.30168C21.3678 12.1302 19.2321 12.2821 16.5657 13.2732C13.8994 14.2643 12.1834 15.5439 9.96931 11.0772C8.31864 7.74715 9.65279 3.80045 12.6329 2.69258Z" fill="currentColor"/><path d="M13.12 16.6257C13.0651 17.0404 13.0897 17.4686 13.3271 17.7458C14.6266 19.2631 16.5194 20.9773 16.5507 21.0056L14.5663 22.7058C14.5475 22.6771 13.1403 20.5399 11.8388 19.0202C11.6012 18.7431 11.1818 18.6527 10.7636 18.6433C11.1507 18.3114 11.5641 17.9288 11.9442 17.6032C12.3134 17.2871 12.7408 16.9486 13.12 16.6257ZM4.14444 8.49582C5.28001 7.52334 6.7877 7.17363 8.28604 7.39426C8.1706 8.76045 8.41739 10.1981 9.07315 11.5212C10.2132 13.8211 11.4114 15.0416 12.9882 15.2155C13.1758 15.2362 13.3607 15.2366 13.5429 15.2282C13.0324 15.8477 12.2746 16.3947 11.4872 17.0691C9.32681 18.9194 8.15739 20.7126 4.538 17.2849C1.83943 14.7291 1.72973 10.5641 4.14444 8.49582ZM9.26846 7.62277C10.6065 8.04783 11.8685 8.93071 12.7685 10.2351C14.0189 12.0476 14.3347 13.2312 14.1132 14.1472C12.6718 14.468 11.429 14.0216 9.96964 11.0778C9.41168 9.95223 9.19608 8.75589 9.26846 7.62277Z" fill="currentColor"/></svg>
-          Tournaments
+          <span data-i18n="shared.nav.tournaments">Tournaments</span>
         </a>
       </div>
     </div>
@@ -136,25 +140,29 @@
         <div class="nav-tabs">
           <a href="TTCB_Rating.html" class="nav-tab">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3ZM18 11.5C17.7239 11.5 17.5 11.7239 17.5 12C17.5 15.0376 15.0376 17.5 12 17.5C11.7239 17.5 11.5 17.7239 11.5 18C11.5 18.2761 11.7239 18.5 12 18.5C15.5898 18.5 18.5 15.5898 18.5 12C18.5 11.7239 18.2761 11.5 18 11.5Z" fill="currentColor"/></svg>
-            Rating
+            <span data-i18n="shared.nav.rating">Rating</span>
           </a>
           <a href="Tournaments.html" class="nav-tab">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.8114 13.9323C17.2805 13.758 17.8155 13.5823 18.2936 13.4049C18.0988 13.7752 17.9741 14.1858 18.1013 14.528C18.7985 16.4035 19.9845 18.6704 20.0004 18.7008L17.551 19.6112C17.5434 19.5784 16.9614 17.0865 16.2643 15.2108C16.1371 14.8687 15.775 14.6389 15.3857 14.4857C15.8522 14.3108 16.3557 14.1017 16.8114 13.9323ZM12.6329 2.69258C15.6131 1.58483 19.2017 3.70181 20.1269 7.30168C21.3678 12.1302 19.2321 12.2821 16.5657 13.2732C13.8994 14.2643 12.1834 15.5439 9.96931 11.0772C8.31864 7.74715 9.65279 3.80045 12.6329 2.69258Z" fill="currentColor"/><path d="M13.12 16.6257C13.0651 17.0404 13.0897 17.4686 13.3271 17.7458C14.6266 19.2631 16.5194 20.9773 16.5507 21.0056L14.5663 22.7058C14.5475 22.6771 13.1403 20.5399 11.8388 19.0202C11.6012 18.7431 11.1818 18.6527 10.7636 18.6433C11.1507 18.3114 11.5641 17.9288 11.9442 17.6032C12.3134 17.2871 12.7408 16.9486 13.12 16.6257ZM4.14444 8.49582C5.28001 7.52334 6.7877 7.17363 8.28604 7.39426C8.1706 8.76045 8.41739 10.1981 9.07315 11.5212C10.2132 13.8211 11.4114 15.0416 12.9882 15.2155C13.1758 15.2362 13.3607 15.2366 13.5429 15.2282C13.0324 15.8477 12.2746 16.3947 11.4872 17.0691C9.32681 18.9194 8.15739 20.7126 4.538 17.2849C1.83943 14.7291 1.72973 10.5641 4.14444 8.49582ZM9.26846 7.62277C10.6065 8.04783 11.8685 8.93071 12.7685 10.2351C14.0189 12.0476 14.3347 13.2312 14.1132 14.1472C12.6718 14.468 11.429 14.0216 9.96964 11.0778C9.41168 9.95223 9.19608 8.75589 9.26846 7.62277Z" fill="currentColor"/></svg>
-            Tournaments
+            <span data-i18n="shared.nav.tournaments">Tournaments</span>
           </a>
         </div>
       </div>
     </div>
     <div class="overlay-panel">
       <img src="icons/logo-text.svg" alt="Table Tennis Club Beograd" style="display:block; width:min(300px, 88%); height:auto;">
+      <div class="lang-toggle">
+        <button type="button" class="lang-btn" data-lang="en">En</button>
+        <button type="button" class="lang-btn" data-lang="ru">Ru</button>
+      </div>
       <div class="overlay-menu">
         <a href="About.html" class="overlay-menu-item" style="text-decoration:none;">
           <img src="icons/info-32.svg" width="32" height="32" alt="">
-          <span>About club</span>
+          <span data-i18n="shared.nav.about_club">About club</span>
         </a>
         <a href="Contact.html" class="overlay-menu-item" style="text-decoration:none;">
           <img src="icons/at-32.svg" width="32" height="32" alt="">
-          <span>Contact</span>
+          <span data-i18n="shared.nav.contact">Contact</span>
         </a>
       </div>
     </div>
@@ -173,18 +181,18 @@
 
       <div class="about-grid">
         <div class="about-text">
-          <h1>About club TTCB</h1>
-          <p>Hi! I&rsquo;m Gleb, the founder of the TTCB club and rating system.</p>
-          <p>Our community brings together table tennis players of all skill levels, including complete beginners, to have a good time and improve their game.</p>
-          <p>Every week we organize tournaments in different formats on weekends, and once a week we also get together to play and practice.</p>
-          <p><strong>Subscribe to our channel to stay up to date with our tournaments and practice sessions.</strong></p>
+          <h1 data-i18n="about.h1">About club TTCB</h1>
+          <p data-i18n="about.p1">Hi! I&rsquo;m Gleb, the founder of the TTCB club and rating system.</p>
+          <p data-i18n="about.p2">Our community brings together table tennis players of all skill levels, including complete beginners, to have a good time and improve their game.</p>
+          <p data-i18n="about.p3">Every week we organize tournaments in different formats on weekends, and once a week we also get together to play and practice.</p>
+          <p><strong data-i18n="about.p4_strong">Subscribe to our channel to stay up to date with our tournaments and practice sessions.</strong></p>
         </div>
         <div class="about-media">
           <div class="about-photo-wrap">
             <img class="photo" src="Images/about-club.png" alt="Table Tennis Club Beograde">
           </div>
           <a href="https://t.me/ttc_belgrade" target="_blank" rel="noopener" class="channel-btn">
-            Open club channel
+            <span data-i18n="about.channel_button">Open club channel</span>
             <img src="icons/arrow-right.svg" width="20" height="20" alt="">
           </a>
         </div>
@@ -198,13 +206,13 @@
           <div class="icon-box">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3ZM18 11.5C17.7239 11.5 17.5 11.7239 17.5 12C17.5 15.0376 15.0376 17.5 12 17.5C11.7239 17.5 11.5 17.7239 11.5 18C11.5 18.2761 11.7239 18.5 12 18.5C15.5898 18.5 18.5 15.5898 18.5 12C18.5 11.7239 18.2761 11.5 18 11.5Z" fill="#FFFFFF"/></svg>
           </div>
-          <div class="heading-title">TTCB Rating</div>
+          <div class="heading-title" data-i18n="about.rating_section.heading">TTCB Rating</div>
         </div>
-        <p>We have our own rating system, created to help every player track their progress. For those who enjoy competing at their best, it also provides an extra challenge and a clear goal to climb higher in the rankings.</p>
-        <p>You can learn more about how the rating system works here.</p>
+        <p data-i18n="about.rating_section.p1">We have our own rating system, created to help every player track their progress. For those who enjoy competing at their best, it also provides an extra challenge and a clear goal to climb higher in the rankings.</p>
+        <p data-i18n="about.rating_section.p2">You can learn more about how the rating system works here.</p>
         <a href="about_rating.html" class="info-btn">
           <img src="icons/info.svg" width="16" height="16" alt="">
-          About rating
+          <span data-i18n="about.rating_section.button">About rating</span>
         </a>
       </div>
     </div>
@@ -215,13 +223,14 @@
   <div class="site-footer">
     <img src="icons/logo-black.svg" width="40" height="40" alt="Table Tennis Club Beograd">
     <div class="footer-meta">
-      <span>Table Tennis Club Beograd</span>
+      <span data-i18n="shared.footer.club_name">Table Tennis Club Beograd</span>
       <span>2026</span>
     </div>
   </div>
 
 </div>
 
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

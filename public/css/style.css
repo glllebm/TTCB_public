@@ -64,7 +64,7 @@ input::placeholder { color: #999999; opacity: 1; }
 .lang-btn {
   border: none; background: transparent; font-family: inherit;
   font-size: 15px; font-weight: 500; color: #1A1A1A;
-  padding: 6px 16px; border-radius: 10px;
+  padding: 6px; border-radius: 10px;
   cursor: pointer; transition: background 0.15s ease, color 0.15s ease;
 }
 .lang-btn:hover:not(.active) { background: #FFFFFF; }
