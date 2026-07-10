@@ -138,7 +138,6 @@ input::placeholder { color: #999999; opacity: 1; }
   column-gap: 8px; padding: 0 24px; margin-bottom: 12px;
 }
 .rating-col-headers span { font-size: 12px; font-weight: 400; color: #999999; }
-.rating-col-headers span:last-child { padding: 0 14px; }
 .rating-card { background: #FFFFFF; border-radius: 24px; padding: 6px 24px; margin-bottom: 20px; }
 .rating-card:last-child { margin-bottom: 0; }
 .rating-row {
