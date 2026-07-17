@@ -204,7 +204,7 @@
       hasRating: p.rating != null,
       changeDir: p.rankChange > 0 ? 'up' : (p.rankChange < 0 ? 'down' : null),
       changeVal: Math.abs(p.rankChange || 0),
-      ratingDir: p.trend === 'down' ? 'down' : 'up',
+      ratingDir: p.trend === 'up' ? 'up' : (p.trend === 'down' ? 'down' : null),
     };
   }
 
@@ -217,8 +217,8 @@
 
   function ratingCellHtml(p) {
     if (!p.hasRating) return '<div class="plate no-rating">' + window.T('rating.state.no_rating') + '</div>';
-    var arrow = p.ratingDir === 'up' ? 'arrow-up.svg' : 'arrow-down.svg';
-    return '<div class="rating-plate"><span class="val">' + p.rating + '</span><img src="icons/' + arrow + '" width="14" height="14" alt="" style="width:20px;height:20px"></div>';
+    var arrow = p.ratingDir ? '<img src="icons/' + (p.ratingDir === 'up' ? 'arrow-up.svg' : 'arrow-down.svg') + '" width="14" height="14" alt="" style="width:20px;height:20px">' : '';
+    return '<div class="rating-plate"><span class="val">' + p.rating + '</span>' + arrow + '</div>';
   }
 
   function rowHtml(p, notFirst) {
@@ -242,7 +242,7 @@
       '<div class="stat"><span class="label">' + window.T('rating.col.tournaments') + '</span><div class="mini-plate">' + p.tournaments + '</div></div>' +
       '<div class="stat"><span class="label">' + window.T('rating.col.winrate') + '</span><div class="mini-plate">' + p.winRate + '</div></div>' +
       '<div class="stat"><span class="label">' + window.T('rating.col.rating') + '</span>' + (p.hasRating ?
-        '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span><img src="icons/' + (p.ratingDir === 'up' ? 'arrow-up.svg' : 'arrow-down.svg') + '" width="14" height="14" alt="" style="width:20px;height:20px"></div>'
+        '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span>' + (p.ratingDir ? '<img src="icons/' + (p.ratingDir === 'up' ? 'arrow-up.svg' : 'arrow-down.svg') + '" width="14" height="14" alt="" style="width:20px;height:20px">' : '') + '</div>'
         : '<div class="mini-plate no-rating">' + window.T('rating.state.no_rating') + '</div>') +
       '</div>' +
       '</div>' +

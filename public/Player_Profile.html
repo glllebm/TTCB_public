@@ -248,8 +248,13 @@
         pRatingEl.style.fontSize = '16px';
         pRatingEl.style.color = '#999999';
       }
-      document.getElementById('pRatingArrow').src = 'icons/' + (p.trend === 'down' ? 'arrow-down.svg' : 'arrow-up.svg');
-      document.getElementById('pRatingArrow').style.display = p.rating == null ? 'none' : '';
+      var pArrow = document.getElementById('pRatingArrow');
+      if (p.rating != null && (p.trend === 'up' || p.trend === 'down')) {
+        pArrow.src = 'icons/' + (p.trend === 'up' ? 'arrow-up.svg' : 'arrow-down.svg');
+        pArrow.style.display = '';
+      } else {
+        pArrow.style.display = 'none';
+      }
       document.getElementById('pRank').textContent = p.rank != null ? p.rank : '\u2014';
 
       var rankArrow = document.getElementById('pRankArrow');
