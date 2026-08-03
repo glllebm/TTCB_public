@@ -126,8 +126,10 @@
     </div>
 
     <!-- ============ SCHEDULED ============ -->
-    <div class="section-label" data-i18n="tournaments.section.scheduled">Scheduled Tournaments</div>
-    <div class="scheduled-list" id="scheduledList"></div>
+    <div id="scheduledSection">
+      <div class="section-label" data-i18n="tournaments.section.scheduled">Scheduled Tournaments</div>
+      <div class="scheduled-list" id="scheduledList"></div>
+    </div>
 
     <!-- ============ COMPLETED ============ -->
     <div class="section-label" data-i18n="tournaments.section.completed">Completed Tournaments</div>
@@ -254,9 +256,10 @@
   }
 
   function render(scheduled, completed) {
+    document.getElementById('scheduledSection').style.display = scheduled.length ? '' : 'none';
     document.getElementById('scheduledList').innerHTML = scheduled.length
       ? scheduled.map(scheduledCardHtml).join('')
-      : '<div class="empty-state">' + window.T('tournaments.state.no_scheduled') + '</div>';
+      : '';
     document.getElementById('completedList').innerHTML = completed.map(completedCardHtml).join('');
   }
 
