@@ -296,7 +296,7 @@
     })
     .then(function (players) {
       if (!Array.isArray(players) || players.length === 0) throw new Error('GET /api/players returned no players');
-      allPlayers = players.map(normalize).sort(function (a, b) { return a.rank - b.rank; });
+      allPlayers = players.filter(function (p) { return p.status !== 'Archive'; }).map(normalize).sort(function (a, b) { return a.rank - b.rank; });
       render(allPlayers.slice(0, 10), allPlayers.slice(10));
     })
     .catch(function (err) {
