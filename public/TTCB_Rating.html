@@ -140,6 +140,15 @@
     <!-- ===== MOBILE CARDS ===== -->
     <div class="player-cards" id="playerCards"></div>
 
+    <!-- ===== INACTIVE PLAYERS ===== -->
+    <div id="inactiveWrap" style="display:none;margin-top:32px;">
+      <div id="inactiveHeading" style="font-size:20px;font-weight:700;margin-bottom:16px;"></div>
+      <div class="table-view">
+        <div class="rating-card" id="inactiveCard"></div>
+      </div>
+      <div class="player-cards" id="inactiveCards"></div>
+    </div>
+
   </div>
 
   <!-- ============ FOOTER ============ -->
@@ -221,6 +230,11 @@
     return '<div class="rating-plate"><span class="val">' + p.rating + '</span>' + arrow + '</div>';
   }
 
+  function ratingCellHtmlNoArrow(p) {
+    if (!p.hasRating) return '<div class="plate no-rating">' + window.T('rating.state.no_rating') + '</div>';
+    return '<div class="rating-plate"><span class="val">' + p.rating + '</span></div>';
+  }
+
   function rowHtml(p, notFirst) {
     return (notFirst ? '<div class="row-divider"></div>' : '') +
       '<a href="Player_Profile.html?id=' + encodeURIComponent(p.id) + '" class="rating-row">' +
@@ -249,6 +263,43 @@
       '</a>';
   }
 
+  function rowHtmlInactive(p, notFirst) {
+    return (notFirst ? '<div class="row-divider"></div>' : '') +
+      '<a href="Player_Profile.html?id=' + encodeURIComponent(p.id) + '" class="rating-row">' +
+      '<div class="rank-cell"><span class="rank">—</span></div>' +
+      '<div class="player-name">' + p.name + '</div>' +
+      '<div class="plate">' + p.tournaments + '</div>' +
+      '<div class="plate">' + p.winRate + '</div>' +
+      ratingCellHtmlNoArrow(p) +
+      '</a>';
+  }
+
+  function cardHtmlInactive(p) {
+    return '<a href="Player_Profile.html?id=' + encodeURIComponent(p.id) + '" class="player-card">' +
+      '<div class="player-card-top">' +
+      '<div class="player-card-line"><span class="label">' + window.T('rating.col.rank') + '</span><div class="rank-cell"><span class="val">—</span></div></div>' +
+      '<div class="player-card-line"><span class="label">' + window.T('rating.col.player') + '</span><span class="val">' + p.name + '</span></div>' +
+      '</div>' +
+      '<div class="player-card-stats">' +
+      '<div class="stat"><span class="label">' + window.T('rating.col.tournaments') + '</span><div class="mini-plate">' + p.tournaments + '</div></div>' +
+      '<div class="stat"><span class="label">' + window.T('rating.col.winrate') + '</span><div class="mini-plate">' + p.winRate + '</div></div>' +
+      '<div class="stat"><span class="label">' + window.T('rating.col.rating') + '</span>' + (p.hasRating ?
+        '<div class="mini-rating-plate"><span class="val">' + p.rating + '</span></div>'
+        : '<div class="mini-plate no-rating">' + window.T('rating.state.no_rating') + '</div>') +
+      '</div>' +
+      '</div>' +
+      '</a>';
+  }
+
+  function renderInactive() {
+    var wrap = document.getElementById('inactiveWrap');
+    if (!inactivePlayers.length) { wrap.style.display = 'none'; return; }
+    document.getElementById('inactiveHeading').textContent = window.T('rating.section.inactive');
+    document.getElementById('inactiveCard').innerHTML = inactivePlayers.map(function (p, i) { return rowHtmlInactive(p, i > 0); }).join('');
+    document.getElementById('inactiveCards').innerHTML = inactivePlayers.map(cardHtmlInactive).join('');
+    wrap.style.display = 'block';
+  }
+
   function render(top, rest) {
     var all = top.concat(rest);
     var topEl = document.getElementById('topCard');
@@ -261,6 +312,7 @@
   }
 
   var allPlayers = [];
+  var inactivePlayers = [];
 
   function matches(p, q) {
     if (!q) return true;
@@ -297,7 +349,14 @@
     .then(function (players) {
       if (!Array.isArray(players) || players.length === 0) throw new Error('GET /api/players returned no players');
       allPlayers = players.filter(function (p) { return p.status !== 'Archive'; }).map(normalize).sort(function (a, b) { return a.rank - b.rank; }).map(function (p, i) { return Object.assign({}, p, { rank: i + 1 }); });
+      inactivePlayers = players.filter(function (p) { return p.status === 'Archive'; }).map(normalize).sort(function (a, b) {
+        var ra = a.rating !== '' && a.rating != null ? a.rating : -Infinity;
+        var rb = b.rating !== '' && b.rating != null ? b.rating : -Infinity;
+        if (rb !== ra) return rb - ra;
+        return (a.name || '').localeCompare(b.name || '');
+      });
       render(allPlayers.slice(0, 10), allPlayers.slice(10));
+      renderInactive();
     })
     .catch(function (err) {
       console.error('Failed to load players from /api/players:', err);
@@ -311,6 +370,7 @@
     if (!allPlayers.length) return;
     var q = document.getElementById('playerSearch').value.trim().toLowerCase();
     renderFiltered(allPlayers.filter(function (p) { return matches(p, q); }));
+    if (inactivePlayers.length) renderInactive();
   });
 })();
 </script>
