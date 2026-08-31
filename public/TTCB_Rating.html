@@ -138,8 +138,8 @@
     </div>
 
     <!-- ===== MOBILE COMPACT TABLE ===== -->
-    <div class="table-head" id="playerTabHead"></div>
-    <div class="tab-list-wrap" id="playerTabList"></div>
+    <div class="tab-list-wrap" id="playerTabListTop"></div>
+    <div class="tab-list-wrap tab-list-empty" id="playerTabListRest"></div>
 
     <!-- ===== INACTIVE PLAYERS ===== -->
     <div id="inactiveWrap" style="display:none;margin-top:32px;">
@@ -147,7 +147,6 @@
       <div class="table-view">
         <div class="rating-card" id="inactiveCard"></div>
       </div>
-      <div class="table-head" id="inactiveTabHead"></div>
       <div class="tab-list-wrap" id="inactiveTabList"></div>
     </div>
 
@@ -197,8 +196,8 @@
     }
     var tabRows = '';
     for (var i = 0; i < 10; i++) tabRows += skTabRow();
-    document.getElementById('playerTabHead').innerHTML = tableHeadHtml();
-    document.getElementById('playerTabList').innerHTML = tabRows;
+    document.getElementById('playerTabListTop').innerHTML = tableHeadHtml() + tabRows;
+    document.getElementById('playerTabListRest').classList.add('tab-list-empty');
   })();
 
   // ---- Map a player object from GET /api/players into the shape rowHtml/cardHtml expect ----
@@ -297,8 +296,10 @@
     return '<div class="table-head">' +
       '<span class="head-label head-rank">' + window.T('rating.col.rank') + '</span>' +
       '<span class="head-label head-player">' + window.T('rating.col.player') + '</span>' +
-      '<span class="head-label head-tourneys">' + (ru ? 'Турниры' : 'Tourneys') + '</span>' +
-      '<span class="head-label head-rating">' + (ru ? 'Рейтинг' : 'Raiting') + '</span>' +
+      '<div class="head-stats-group">' +
+        '<span class="head-label head-tourneys">' + (ru ? 'Турниры' : 'Tourneys') + '</span>' +
+        '<span class="head-label head-rating">' + (ru ? 'Рейтинг' : 'Raiting') + '</span>' +
+      '</div>' +
       '</div>';
   }
 
@@ -347,7 +348,6 @@
     if (!inactivePlayers.length) { wrap.style.display = 'none'; return; }
     document.getElementById('inactiveHeading').textContent = window.T('rating.section.inactive');
     document.getElementById('inactiveCard').innerHTML = inactivePlayers.map(function (p, i) { return rowHtmlInactive(p, i > 0); }).join('');
-    document.getElementById('inactiveTabHead').innerHTML = tableHeadHtml();
     document.getElementById('inactiveTabList').innerHTML = inactivePlayers.map(tabListItemHtmlInactive).join('');
     wrap.style.display = 'block';
   }
@@ -360,8 +360,10 @@
     topEl.style.display = top.length === 0 ? 'none' : '';
     restEl.innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
     restEl.style.display = rest.length === 0 ? 'none' : '';
-    document.getElementById('playerTabHead').innerHTML = tableHeadHtml();
-    document.getElementById('playerTabList').innerHTML = all.map(tabListItemHtml).join('');
+    document.getElementById('playerTabListTop').innerHTML = tableHeadHtml() + top.map(tabListItemHtml).join('');
+    var mobileRest = document.getElementById('playerTabListRest');
+    mobileRest.innerHTML = rest.map(tabListItemHtml).join('');
+    mobileRest.classList.toggle('tab-list-empty', rest.length === 0);
   }
 
   var allPlayers = [];
@@ -383,7 +385,9 @@
       topEl.style.display = '';
       restEl.innerHTML = '';
       restEl.style.display = 'none';
-      document.getElementById('playerTabList').innerHTML = emptyHtml;
+      document.getElementById('playerTabListTop').innerHTML = emptyHtml;
+      document.getElementById('playerTabListRest').innerHTML = '';
+      document.getElementById('playerTabListRest').classList.add('tab-list-empty');
     } else {
       render(list.slice(0, 10), list.slice(10));
     }
@@ -416,7 +420,9 @@
       var errHtml = '<div style="padding:32px;text-align:center;color:#ED6455;font-size:15px;font-weight:500;">' + window.T('rating.state.load_error') + '</div>';
       document.getElementById('topCard').innerHTML = errHtml;
       document.getElementById('restCard').innerHTML = '';
-      document.getElementById('playerTabList').innerHTML = errHtml;
+      document.getElementById('playerTabListTop').innerHTML = errHtml;
+      document.getElementById('playerTabListRest').innerHTML = '';
+      document.getElementById('playerTabListRest').classList.add('tab-list-empty');
     });
 
   document.addEventListener('ttcb:langchange', function () {
