@@ -164,7 +164,110 @@ input::placeholder { color: #999999; opacity: 1; }
 }
 .rating-plate .val { font-size: 14px; font-weight: 500; color: #F74A96; }
 
-/* ============ RATING CARDS (mobile) ============ */
+/* ============ TAB LIST ITEM (mobile compact rows) ============ */
+.tab-list-wrap {
+  display: none;
+  flex-direction: column;
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 0 16px;
+  margin-bottom: 8px;
+}
+.tli {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  gap: 8px;
+  border-bottom: 1px dotted #CCCCCC;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.tli:last-child { border-bottom: none; }
+.tli-rank-frame {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 0 0 62px;
+}
+.tli-rank-num {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #333333;
+  flex-shrink: 0;
+}
+.tli-rank-change {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+}
+.tli-rank-change svg { flex-shrink: 0; }
+.tli-rank-change-val {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #333333;
+}
+.tli-player-frame {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.tli-player-frame svg { flex-shrink: 0; }
+.tli-player-name {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #333333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tli-info-frame {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.tli-info-tag {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: #F7F7F7;
+  box-sizing: border-box;
+  height: 22px;
+}
+.tli-tag-tourn { width: 48px; justify-content: center; }
+.tli-tag-rating { width: 50px; justify-content: space-between; overflow: hidden; }
+.tli-tourn-count {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #333333;
+}
+.tli-rating-num {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #ED592C;
+}
+.tli-no-rating {
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #999999;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ============ RATING CARDS (mobile) — kept for reference ============ */
 .player-cards { display: none; flex-direction: column; gap: 8px; }
 .player-card {
   background: #FFFFFF; border-radius: 20px; padding: 20px; display: flex; flex-direction: column;
@@ -352,7 +455,7 @@ input::placeholder { color: #999999; opacity: 1; }
   .rating-col-headers, .detail-col-headers { display: none; }
   .rating-row, .rating-card { display: none !important; }
   .table-view { display: none !important; }
-  .player-cards { display: flex !important; }
+  .tab-list-wrap { display: flex !important; }
   .detail-cards { display: flex !important; }
 
   .head-row { flex-direction: column; align-items: stretch !important; gap: 24px !important; margin-bottom: 16px !important; }

@@ -137,8 +137,8 @@
       <div class="rating-card" id="restCard"></div>
     </div>
 
-    <!-- ===== MOBILE CARDS ===== -->
-    <div class="player-cards" id="playerCards"></div>
+    <!-- ===== MOBILE COMPACT TABLE ===== -->
+    <div class="tab-list-wrap" id="playerTabList"></div>
 
     <!-- ===== INACTIVE PLAYERS ===== -->
     <div id="inactiveWrap" style="display:none;margin-top:32px;">
@@ -146,7 +146,7 @@
       <div class="table-view">
         <div class="rating-card" id="inactiveCard"></div>
       </div>
-      <div class="player-cards" id="inactiveCards"></div>
+      <div class="tab-list-wrap" id="inactiveTabList"></div>
     </div>
 
   </div>
@@ -183,21 +183,19 @@
     for (var i = 0; i < 5; i++) rest += skRow(i === 0);
     document.getElementById('topCard').innerHTML = top;
     document.getElementById('restCard').innerHTML = rest;
-    function skCard() {
-      return '<div class="player-card" style="pointer-events:none">' +
-        '<div class="player-card-top">' +
-        '<div class="player-card-line"><span class="label">Rank</span><span class="skeleton" style="display:inline-block;width:40px;height:20px;border-radius:4px"></span></div>' +
-        '<div class="player-card-line"><span class="label">Player</span><span class="skeleton" style="display:block;height:20px;border-radius:4px;width:60%"></span></div>' +
+    function skTabRow() {
+      return '<div class="tli" style="pointer-events:none">' +
+        '<div class="tli-rank-frame"><span class="skeleton" style="display:inline-block;width:18px;height:12px;border-radius:3px"></span></div>' +
+        '<div class="tli-player-frame" style="flex:1;min-width:0"><span class="skeleton" style="display:block;height:12px;border-radius:3px;width:55%"></span></div>' +
+        '<div class="tli-info-frame">' +
+          '<div class="tli-info-tag tli-tag-tourn"><span class="skeleton" style="display:block;width:20px;height:10px;border-radius:3px"></span></div>' +
+          '<div class="tli-info-tag tli-tag-rating"><span class="skeleton" style="display:block;width:30px;height:10px;border-radius:3px"></span></div>' +
         '</div>' +
-        '<div class="player-card-stats">' +
-        '<div class="stat"><span class="label">Tournaments</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
-        '<div class="stat"><span class="label">Win rate</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
-        '<div class="stat"><span class="label">Rating</span><div class="skeleton" style="height:40px;border-radius:10px"></div></div>' +
-        '</div></div>';
+        '</div>';
     }
-    var cards = '';
-    for (var i = 0; i < 10; i++) cards += skCard();
-    document.getElementById('playerCards').innerHTML = cards;
+    var tabRows = '';
+    for (var i = 0; i < 10; i++) tabRows += skTabRow();
+    document.getElementById('playerTabList').innerHTML = tabRows;
   })();
 
   // ---- Map a player object from GET /api/players into the shape rowHtml/cardHtml expect ----
@@ -291,12 +289,53 @@
       '</a>';
   }
 
+  // Inline arrow SVG with spec colors — avoids img-src dependency for small icons
+  function arrowSvg(dir, size) {
+    var color = dir === 'up' ? '#78B418' : '#ED592C';
+    var path = dir === 'up'
+      ? 'M7.04 5.23333L4.48667 9.66C4.3864 9.82819 4.33256 10.02 4.33063 10.2158C4.3287 10.4116 4.37875 10.6044 4.47568 10.7745C4.57261 10.9446 4.71294 11.086 4.88235 11.1842C5.05177 11.2823 5.2442 11.3338 5.44 11.3333H10.56C10.7538 11.3324 10.944 11.2807 11.1116 11.1832C11.2791 11.0857 11.4181 10.9459 11.5146 10.7778C11.6111 10.6097 11.6618 10.4192 11.6616 10.2254C11.6614 10.0316 11.6103 9.8412 11.5133 9.67333L8.96 5.23333C8.86309 5.06435 8.72328 4.92394 8.55472 4.82629C8.38616 4.72864 8.1948 4.67722 8 4.67722C7.8052 4.67722 7.61384 4.72864 7.44528 4.82629C7.27672 4.92394 7.13691 5.06435 7.04 5.23333Z'
+      : 'M7.04 10.7772L4.48667 6.35056C4.38641 6.18237 4.33256 5.99059 4.33063 5.7948C4.3287 5.599 4.37875 5.4062 4.47568 5.23607C4.57261 5.06593 4.71294 4.92457 4.88235 4.82639C5.05177 4.72821 5.2442 4.67674 5.44 4.67723H10.56C10.7538 4.67811 10.944 4.72989 11.1116 4.82738C11.2791 4.92488 11.4181 5.06466 11.5146 5.23275C11.6111 5.40083 11.6618 5.59132 11.6616 5.78516C11.6614 5.97899 11.6103 6.16936 11.5133 6.33723L8.96 10.7772C8.86309 10.9462 8.72329 11.0866 8.55472 11.1843C8.38616 11.2819 8.1948 11.3333 8 11.3333C7.8052 11.3333 7.61384 11.2819 7.44528 11.1843C7.27672 11.0866 7.13691 10.9462 7.04 10.7772Z';
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="' + path + '" fill="' + color + '"/></svg>';
+  }
+
+  function tabListItemHtml(p) {
+    var changeTag = p.changeDir
+      ? '<div class="tli-rank-change">' + arrowSvg(p.changeDir, 12) + '<span class="tli-rank-change-val">' + p.changeVal + '</span></div>'
+      : '';
+    var playerTrend = p.ratingDir ? arrowSvg(p.ratingDir, 12) : '';
+    var ratingContent = p.hasRating
+      ? '<span class="tli-rating-num">' + p.rating + '</span>' + (p.ratingDir ? arrowSvg(p.ratingDir, 12) : '')
+      : '<span class="tli-no-rating">' + window.T('rating.state.no_rating') + '</span>';
+    return '<a href="Player_Profile.html?id=' + encodeURIComponent(p.id) + '" class="tli">' +
+      '<div class="tli-rank-frame"><span class="tli-rank-num">' + p.rank + '</span>' + changeTag + '</div>' +
+      '<div class="tli-player-frame">' + playerTrend + '<span class="tli-player-name">' + p.name + '</span></div>' +
+      '<div class="tli-info-frame">' +
+        '<div class="tli-info-tag tli-tag-tourn"><span class="tli-tourn-count">' + (p.tournaments || '0') + '</span></div>' +
+        '<div class="tli-info-tag tli-tag-rating">' + ratingContent + '</div>' +
+      '</div>' +
+      '</a>';
+  }
+
+  function tabListItemHtmlInactive(p) {
+    var ratingContent = p.hasRating
+      ? '<span class="tli-rating-num">' + p.rating + '</span>'
+      : '<span class="tli-no-rating">' + window.T('rating.state.no_rating') + '</span>';
+    return '<a href="Player_Profile.html?id=' + encodeURIComponent(p.id) + '" class="tli">' +
+      '<div class="tli-rank-frame"><span class="tli-rank-num">—</span></div>' +
+      '<div class="tli-player-frame"><span class="tli-player-name">' + p.name + '</span></div>' +
+      '<div class="tli-info-frame">' +
+        '<div class="tli-info-tag tli-tag-tourn"><span class="tli-tourn-count">' + (p.tournaments || '0') + '</span></div>' +
+        '<div class="tli-info-tag tli-tag-rating">' + ratingContent + '</div>' +
+      '</div>' +
+      '</a>';
+  }
+
   function renderInactive() {
     var wrap = document.getElementById('inactiveWrap');
     if (!inactivePlayers.length) { wrap.style.display = 'none'; return; }
     document.getElementById('inactiveHeading').textContent = window.T('rating.section.inactive');
     document.getElementById('inactiveCard').innerHTML = inactivePlayers.map(function (p, i) { return rowHtmlInactive(p, i > 0); }).join('');
-    document.getElementById('inactiveCards').innerHTML = inactivePlayers.map(cardHtmlInactive).join('');
+    document.getElementById('inactiveTabList').innerHTML = inactivePlayers.map(tabListItemHtmlInactive).join('');
     wrap.style.display = 'block';
   }
 
@@ -308,7 +347,7 @@
     topEl.style.display = top.length === 0 ? 'none' : '';
     restEl.innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
     restEl.style.display = rest.length === 0 ? 'none' : '';
-    document.getElementById('playerCards').innerHTML = all.map(cardHtml).join('');
+    document.getElementById('playerTabList').innerHTML = all.map(tabListItemHtml).join('');
   }
 
   var allPlayers = [];
@@ -330,7 +369,7 @@
       topEl.style.display = '';
       restEl.innerHTML = '';
       restEl.style.display = 'none';
-      document.getElementById('playerCards').innerHTML = emptyHtml;
+      document.getElementById('playerTabList').innerHTML = emptyHtml;
     } else {
       render(list.slice(0, 10), list.slice(10));
     }
@@ -363,7 +402,7 @@
       var errHtml = '<div style="padding:32px;text-align:center;color:#ED6455;font-size:15px;font-weight:500;">' + window.T('rating.state.load_error') + '</div>';
       document.getElementById('topCard').innerHTML = errHtml;
       document.getElementById('restCard').innerHTML = '';
-      document.getElementById('playerCards').innerHTML = errHtml;
+      document.getElementById('playerTabList').innerHTML = errHtml;
     });
 
   document.addEventListener('ttcb:langchange', function () {
