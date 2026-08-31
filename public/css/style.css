@@ -174,11 +174,12 @@ input::placeholder { color: #999999; opacity: 1; }
   margin-bottom: 8px;
 }
 .table-head {
-  display: flex;
+  display: none;
   align-items: center;
   height: 30px;
+  padding: 0 16px;
   gap: 8px;
-  flex-shrink: 0;
+  margin-bottom: 4px;
 }
 .head-label {
   font-size: 10px;
@@ -198,7 +199,7 @@ input::placeholder { color: #999999; opacity: 1; }
   align-items: center;
   padding: 12px 0;
   gap: 8px;
-  border-bottom: 1px dotted #CCCCCC;
+  border-bottom: 1px solid #F0F0F0;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -476,6 +477,7 @@ input::placeholder { color: #999999; opacity: 1; }
   .rating-row, .rating-card { display: none !important; }
   .table-view { display: none !important; }
   .tab-list-wrap { display: flex !important; }
+  .table-head { display: flex !important; }
   .detail-cards { display: flex !important; }
 
   .head-row { flex-direction: column; align-items: stretch !important; gap: 24px !important; margin-bottom: 16px !important; }

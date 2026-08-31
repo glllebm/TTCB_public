@@ -138,6 +138,7 @@
     </div>
 
     <!-- ===== MOBILE COMPACT TABLE ===== -->
+    <div class="table-head" id="playerTabHead"></div>
     <div class="tab-list-wrap" id="playerTabList"></div>
 
     <!-- ===== INACTIVE PLAYERS ===== -->
@@ -146,6 +147,7 @@
       <div class="table-view">
         <div class="rating-card" id="inactiveCard"></div>
       </div>
+      <div class="table-head" id="inactiveTabHead"></div>
       <div class="tab-list-wrap" id="inactiveTabList"></div>
     </div>
 
@@ -195,7 +197,8 @@
     }
     var tabRows = '';
     for (var i = 0; i < 10; i++) tabRows += skTabRow();
-    document.getElementById('playerTabList').innerHTML = tableHeadHtml() + tabRows;
+    document.getElementById('playerTabHead').innerHTML = tableHeadHtml();
+    document.getElementById('playerTabList').innerHTML = tabRows;
   })();
 
   // ---- Map a player object from GET /api/players into the shape rowHtml/cardHtml expect ----
@@ -312,13 +315,12 @@
     var changeTag = p.changeDir
       ? '<div class="tli-rank-change">' + arrowSvg(p.changeDir, 12) + '<span class="tli-rank-change-val">' + p.changeVal + '</span></div>'
       : '';
-    var playerTrend = p.ratingDir ? arrowSvg(p.ratingDir, 12) : '';
     var ratingContent = p.hasRating
       ? '<span class="tli-rating-num">' + p.rating + '</span>' + (p.ratingDir ? arrowSvg(p.ratingDir, 12) : '')
       : '<span class="tli-no-rating">' + window.T('rating.state.no_rating') + '</span>';
     return '<a href="Player_Profile.html?id=' + encodeURIComponent(p.id) + '" class="tli">' +
       '<div class="tli-rank-frame"><span class="tli-rank-num">' + p.rank + '</span>' + changeTag + '</div>' +
-      '<div class="tli-player-frame">' + playerTrend + '<span class="tli-player-name">' + p.name + '</span></div>' +
+      '<div class="tli-player-frame"><span class="tli-player-name">' + p.name + '</span></div>' +
       '<div class="tli-info-frame">' +
         '<div class="tli-info-tag tli-tag-tourn"><span class="tli-tourn-count">' + (p.tournaments || '0') + '</span></div>' +
         '<div class="tli-info-tag tli-tag-rating">' + ratingContent + '</div>' +
@@ -345,7 +347,8 @@
     if (!inactivePlayers.length) { wrap.style.display = 'none'; return; }
     document.getElementById('inactiveHeading').textContent = window.T('rating.section.inactive');
     document.getElementById('inactiveCard').innerHTML = inactivePlayers.map(function (p, i) { return rowHtmlInactive(p, i > 0); }).join('');
-    document.getElementById('inactiveTabList').innerHTML = tableHeadHtml() + inactivePlayers.map(tabListItemHtmlInactive).join('');
+    document.getElementById('inactiveTabHead').innerHTML = tableHeadHtml();
+    document.getElementById('inactiveTabList').innerHTML = inactivePlayers.map(tabListItemHtmlInactive).join('');
     wrap.style.display = 'block';
   }
 
@@ -357,7 +360,8 @@
     topEl.style.display = top.length === 0 ? 'none' : '';
     restEl.innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
     restEl.style.display = rest.length === 0 ? 'none' : '';
-    document.getElementById('playerTabList').innerHTML = tableHeadHtml() + all.map(tabListItemHtml).join('');
+    document.getElementById('playerTabHead').innerHTML = tableHeadHtml();
+    document.getElementById('playerTabList').innerHTML = all.map(tabListItemHtml).join('');
   }
 
   var allPlayers = [];
