@@ -173,6 +173,26 @@ input::placeholder { color: #999999; opacity: 1; }
   padding: 0 16px;
   margin-bottom: 8px;
 }
+.table-head {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.head-label {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #999999;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.head-rank { flex: 0 0 62px; }
+.head-player { flex: 1; min-width: 0; }
+.head-tourneys { width: 48px; }
+.head-rating { width: 50px; }
 .tli {
   display: flex;
   align-items: center;
@@ -256,7 +276,7 @@ input::placeholder { color: #999999; opacity: 1; }
   font-size: 10px;
   font-weight: 500;
   line-height: 1.4;
-  color: #ED592C;
+  color: #F74A96;
 }
 .tli-no-rating {
   font-size: 8px;

@@ -195,7 +195,7 @@
     }
     var tabRows = '';
     for (var i = 0; i < 10; i++) tabRows += skTabRow();
-    document.getElementById('playerTabList').innerHTML = tabRows;
+    document.getElementById('playerTabList').innerHTML = tableHeadHtml() + tabRows;
   })();
 
   // ---- Map a player object from GET /api/players into the shape rowHtml/cardHtml expect ----
@@ -289,6 +289,16 @@
       '</a>';
   }
 
+  function tableHeadHtml() {
+    var ru = window.getLang() === 'ru';
+    return '<div class="table-head">' +
+      '<span class="head-label head-rank">' + window.T('rating.col.rank') + '</span>' +
+      '<span class="head-label head-player">' + window.T('rating.col.player') + '</span>' +
+      '<span class="head-label head-tourneys">' + (ru ? 'Турниры' : 'Tourneys') + '</span>' +
+      '<span class="head-label head-rating">' + (ru ? 'Рейтинг' : 'Raiting') + '</span>' +
+      '</div>';
+  }
+
   // Inline arrow SVG with spec colors — avoids img-src dependency for small icons
   function arrowSvg(dir, size) {
     var color = dir === 'up' ? '#78B418' : '#ED592C';
@@ -335,7 +345,7 @@
     if (!inactivePlayers.length) { wrap.style.display = 'none'; return; }
     document.getElementById('inactiveHeading').textContent = window.T('rating.section.inactive');
     document.getElementById('inactiveCard').innerHTML = inactivePlayers.map(function (p, i) { return rowHtmlInactive(p, i > 0); }).join('');
-    document.getElementById('inactiveTabList').innerHTML = inactivePlayers.map(tabListItemHtmlInactive).join('');
+    document.getElementById('inactiveTabList').innerHTML = tableHeadHtml() + inactivePlayers.map(tabListItemHtmlInactive).join('');
     wrap.style.display = 'block';
   }
 
@@ -347,7 +357,7 @@
     topEl.style.display = top.length === 0 ? 'none' : '';
     restEl.innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
     restEl.style.display = rest.length === 0 ? 'none' : '';
-    document.getElementById('playerTabList').innerHTML = all.map(tabListItemHtml).join('');
+    document.getElementById('playerTabList').innerHTML = tableHeadHtml() + all.map(tabListItemHtml).join('');
   }
 
   var allPlayers = [];
