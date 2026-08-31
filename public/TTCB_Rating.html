@@ -138,7 +138,6 @@
     </div>
 
     <!-- ===== MOBILE COMPACT TABLE ===== -->
-    <div class="table-head" id="playerTabHead"></div>
     <div class="tab-list-wrap" id="playerTabListTop"></div>
     <div class="tab-list-wrap tab-list-empty" id="playerTabListRest"></div>
 
@@ -197,8 +196,7 @@
     }
     var tabRows = '';
     for (var i = 0; i < 10; i++) tabRows += skTabRow();
-    document.getElementById('playerTabHead').innerHTML = tableHeadHtml();
-    document.getElementById('playerTabListTop').innerHTML = tabRows;
+    document.getElementById('playerTabListTop').innerHTML = tableHeadHtml() + tabRows;
     document.getElementById('playerTabListRest').classList.add('tab-list-empty');
   })();
 
@@ -298,10 +296,8 @@
     return '<div class="table-head">' +
       '<span class="head-label head-rank">' + window.T('rating.col.rank') + '</span>' +
       '<span class="head-label head-player">' + window.T('rating.col.player') + '</span>' +
-      '<div class="head-stats-group">' +
-        '<span class="head-label head-tourneys">' + (ru ? 'Турниры' : 'Tourneys') + '</span>' +
-        '<span class="head-label head-rating">' + (ru ? 'Рейтинг' : 'Raiting') + '</span>' +
-      '</div>' +
+      '<span class="head-label head-tourneys">' + (ru ? 'Турниры' : 'Tourneys') + '</span>' +
+      '<span class="head-label head-rating">' + (ru ? 'Рейтинг' : 'Raiting') + '</span>' +
       '</div>';
   }
 
@@ -362,8 +358,7 @@
     topEl.style.display = top.length === 0 ? 'none' : '';
     restEl.innerHTML = rest.map(function (p, i) { return rowHtml(p, i > 0); }).join('');
     restEl.style.display = rest.length === 0 ? 'none' : '';
-    document.getElementById('playerTabHead').innerHTML = tableHeadHtml();
-    document.getElementById('playerTabListTop').innerHTML = top.map(tabListItemHtml).join('');
+    document.getElementById('playerTabListTop').innerHTML = tableHeadHtml() + top.map(tabListItemHtml).join('');
     var mobileRest = document.getElementById('playerTabListRest');
     mobileRest.innerHTML = rest.map(tabListItemHtml).join('');
     mobileRest.classList.toggle('tab-list-empty', rest.length === 0);

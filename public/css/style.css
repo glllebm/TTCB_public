@@ -174,27 +174,25 @@ input::placeholder { color: #999999; opacity: 1; }
   margin-bottom: 8px;
 }
 .table-head {
-  display: none;
+  display: flex;
   align-items: center;
   height: 30px;
-  padding: 0 16px;
+  padding: 0;
   gap: 8px;
-  margin-bottom: 4px;
 }
 .head-label {
   font-size: 10px;
   font-weight: 400;
   line-height: 1.4;
   color: #999999;
-  flex-shrink: 0;
   white-space: nowrap;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .head-rank { flex: 0 0 62px; }
 .head-player { flex: 1; min-width: 0; }
-.head-stats-group { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-.head-tourneys { width: 48px; }
-.head-rating { width: 48px; }
+.head-tourneys { width: 48px; flex-shrink: 0; }
+.head-rating { width: 50px; flex-shrink: 0; }
 .tab-list-wrap.tab-list-empty { display: none !important; }
 .tli {
   display: flex;
@@ -479,7 +477,6 @@ input::placeholder { color: #999999; opacity: 1; }
   .rating-row, .rating-card { display: none !important; }
   .table-view { display: none !important; }
   .tab-list-wrap { display: flex !important; }
-  .table-head { display: flex !important; }
   .detail-cards { display: flex !important; }
 
   .head-row { flex-direction: column; align-items: stretch !important; gap: 24px !important; margin-bottom: 16px !important; }
