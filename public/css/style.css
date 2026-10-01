@@ -337,6 +337,22 @@ input::placeholder { color: #999999; opacity: 1; }
   width: 240px; height: 240px; object-fit: contain; z-index: 0;
 }
 
+/* League / Rating card variants */
+.tourn-card--league { min-height: 156px; padding: 16px; }
+.tourn-card--league .tourn-card-body { gap: 32px; justify-content: flex-start; }
+.tourn-card--league .tourn-title {
+  font-size: 20px; font-weight: 700; line-height: normal;
+  max-width: 180px; word-break: break-word;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.tourn-card--league .tourn-card-meta { gap: 12px; max-width: 180px; }
+.tourn-card--league .meta-line { gap: 4px; font-size: 12px; }
+.tourn-card--league .meta-line .meta-val { margin-left: 8px; font-weight: 500; }
+.league-illustration {
+  position: absolute; top: -6px; right: -40px;
+  width: 191px; height: 168px; object-fit: cover; pointer-events: none; z-index: 0;
+}
+
 .action-card {
   background: #F7F7F7; border-radius: 16px; padding: 20px; display: flex; flex-direction: column;
   gap: 12px; box-sizing: border-box; justify-content: space-between;

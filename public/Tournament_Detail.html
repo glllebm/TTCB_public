@@ -230,6 +230,8 @@
     'League Series':  { bg: '#F0F0F0', fg: '#1A1A1A', labelColor: '#999999', iconFilter: 'none', ball: 'ball-series.png' },
     'League Cup':     { bg: '#1F1F1F', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-cup.png' },
     'League Masters': { bg: 'linear-gradient(135deg, #F74A96, #C3095B)', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-masters.png' },
+    'Rating':         { bg: '#F0F0F0', fg: '#1A1A1A', labelColor: '#999999', iconFilter: 'none', ball: 'ball-ttcb.png' },
+    'League':         { bg: '#17181C', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'player-illustration.png', isLeague: true },
   };
   function styleFor(category) { return STYLES[category] || STYLES['League Series']; }
 
@@ -237,6 +239,8 @@
     'League Series': 'ball-series.png',
     'League Cup': 'ball-cup.png',
     'League Masters': 'ball-masters.png',
+    'Rating': 'ball-ttcb.png',
+    'League': 'player-illustration.png',
   };
 
   function ratingCell(p) {
@@ -286,8 +290,13 @@
     var s = styleFor(t.category);
     var card = document.getElementById('tCard');
     card.style.background = s.bg;
+    if (s.isLeague) {
+      card.classList.add('tourn-card--league');
+    } else {
+      card.classList.remove('tourn-card--league');
+    }
     var categoryEl = document.getElementById('tCategory');
-    categoryEl.textContent = t.category || '\u2014';
+    categoryEl.textContent = (t.category === 'Rating' || t.category === 'League') ? (t.name || t.category) : (t.category || '\u2014');
     categoryEl.style.color = s.fg;
     var metaLines = card.querySelectorAll('.meta-line');
     metaLines.forEach(function (line) {
@@ -301,7 +310,9 @@
     document.getElementById('tDate').textContent = t.date || '\u2014';
     document.getElementById('tCapacity').textContent = t.capacity;
     document.getElementById('tFreeSlots').textContent = t.freeSlots != null ? t.freeSlots : t.capacity;
-    document.getElementById('tBall').src = 'icons/' + s.ball;
+    var ballEl = document.getElementById('tBall');
+    ballEl.src = 'icons/' + s.ball;
+    ballEl.className = s.isLeague ? 'league-illustration' : 'tourn-ball';
     document.getElementById('telegramBtn').href = TELEGRAM_URL;
     document.getElementById('telegramBtn').target = '_blank';
     document.getElementById('telegramBtn').rel = 'noopener noreferrer';

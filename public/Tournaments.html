@@ -187,33 +187,49 @@
     document.getElementById('completedList').innerHTML = comp;
   })();
 
-  // ---- Per-category visual style (kept from the original design mock) ----
+  // ---- Per-category visual style ----
   var STYLES = {
     'League Series':  { bg: '#F0F0F0', fg: '#1A1A1A', labelColor: '#999999', iconFilter: 'none', ball: 'ball-series.png' },
-    'League Cup':      { bg: '#1F1F1F', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-cup.png' },
-    'League Masters':  { bg: 'linear-gradient(135deg, #F74A96, #C3095B)', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-masters.png' },
+    'League Cup':     { bg: '#1F1F1F', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-cup.png' },
+    'League Masters': { bg: 'linear-gradient(135deg, #F74A96, #C3095B)', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'ball-masters.png' },
+    'Rating':         { bg: '#F0F0F0', fg: '#1A1A1A', labelColor: '#999999', iconFilter: 'none', ball: 'ball-ttcb.png' },
+    'League':         { bg: '#17181C', fg: '#FFFFFF', labelColor: '#FFFFFF', iconFilter: 'brightness(0) invert(1)', ball: 'player-illustration.png', isLeague: true },
   };
   function styleFor(category) { return STYLES[category] || STYLES['League Series']; }
   function categoryLabel(cat) {
     if (cat === 'League Series') return window.T('tournaments.category.league_series');
     if (cat === 'League Cup') return window.T('tournaments.category.league_cup');
     if (cat === 'League Masters') return window.T('tournaments.category.league_masters');
+    if (cat === 'Rating') return window.T('tournaments.category.rating');
+    if (cat === 'League') return window.T('tournaments.category.league');
     return cat;
+  }
+  function tournCardTitle(t) {
+    if (t.category === 'Rating' || t.category === 'League') return (t.name || t.category);
+    return categoryLabel(t.category);
+  }
+  function playersValue(t, s, forScheduled) {
+    if (forScheduled) {
+      return s.isLeague ? (window.T('tournaments.card.players_up_to_prefix') + ' ' + t.capacity) : t.capacity;
+    }
+    return t.filledPlayers != null ? t.filledPlayers : t.capacity;
   }
 
   function scheduledCardHtml(t) {
     var s = styleFor(t.category);
     var detailHref = 'Tournament_Detail.html?id=' + encodeURIComponent(t.id);
     var free = t.freeSlots != null ? t.freeSlots : t.capacity;
+    var cardClass = s.isLeague ? 'tourn-card tourn-card--league' : 'tourn-card';
+    var ballClass = s.isLeague ? 'league-illustration' : 'tourn-ball';
     return '<div class="trow sched-row">' +
-      '<div class="tourn-card" style="background:' + s.bg + '">' +
+      '<div class="' + cardClass + '" style="background:' + s.bg + '">' +
       '<div class="tourn-card-body">' +
-      '<div class="tourn-title" style="color:' + s.fg + '">' + categoryLabel(t.category) + '</div>' +
+      '<div class="tourn-title" style="color:' + s.fg + '">' + tournCardTitle(t) + '</div>' +
       '<div class="tourn-card-meta">' +
       '<div class="meta-line"><img src="icons/calendar.svg" width="16" height="16" alt="" style="filter:' + s.iconFilter + '"><span class="meta-label" style="color:' + s.labelColor + '">' + window.T('tournaments.card.date_label') + '</span><span class="meta-val" style="color:' + s.fg + '">' + (t.date || '\u2014') + '</span></div>' +
-      '<div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt="" style="filter:' + s.iconFilter + '"><span class="meta-label" style="color:' + s.labelColor + '">' + window.T('tournaments.card.players_label') + '</span><span class="meta-val" style="color:' + s.fg + '">' + t.capacity + '</span></div>' +
+      '<div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt="" style="filter:' + s.iconFilter + '"><span class="meta-label" style="color:' + s.labelColor + '">' + window.T('tournaments.card.players_label') + '</span><span class="meta-val" style="color:' + s.fg + '">' + playersValue(t, s, true) + '</span></div>' +
       '</div></div>' +
-      '<img class="tourn-ball" src="icons/' + s.ball + '" alt="">' +
+      '<img class="' + ballClass + '" src="icons/' + s.ball + '" alt="">' +
       '</div>' +
       '<div class="action-card">' +
       '<a href="' + detailHref + '" class="join-btn">' + window.T('tournaments.card.join_button') +
@@ -240,16 +256,18 @@
         (p.trend === 'up' || p.trend === 'down' ? '<img src="icons/arrow-' + p.trend + '.svg" width="12" height="12" alt="" style="width:14px;height:14px">' : '') +
         '</div></div>';
     }).join('');
-    var actualPlayers = t.filledPlayers != null ? t.filledPlayers : t.capacity;
+    var actualPlayers = playersValue(t, s, false);
+    var cardClass = s.isLeague ? 'tourn-card tourn-card--league' : 'tourn-card';
+    var ballClass = s.isLeague ? 'league-illustration' : 'tourn-ball';
     return '<div class="trow">' +
-      '<div class="tourn-card" style="background:' + s.bg + '">' +
+      '<div class="' + cardClass + '" style="background:' + s.bg + '">' +
       '<div class="tourn-card-body">' +
-      '<div class="tourn-title" style="color:' + s.fg + '">' + categoryLabel(t.category) + '</div>' +
+      '<div class="tourn-title" style="color:' + s.fg + '">' + tournCardTitle(t) + '</div>' +
       '<div class="tourn-card-meta">' +
       '<div class="meta-line"><img src="icons/calendar.svg" width="16" height="16" alt="" style="filter:' + s.iconFilter + '"><span class="meta-label" style="color:' + s.labelColor + '">' + window.T('tournaments.card.date_label') + '</span><span class="meta-val" style="color:' + s.fg + '">' + (t.date || '\u2014') + '</span></div>' +
       '<div class="meta-line"><img src="icons/players.svg" width="16" height="16" alt="" style="filter:' + s.iconFilter + '"><span class="meta-label" style="color:' + s.labelColor + '">' + window.T('tournaments.card.players_label') + '</span><span class="meta-val" style="color:' + s.fg + '">' + actualPlayers + '</span></div>' +
       '</div></div>' +
-      '<img class="tourn-ball" src="icons/' + s.ball + '" alt="">' +
+      '<img class="' + ballClass + '" src="icons/' + s.ball + '" alt="">' +
       '</div>' +
       '<div class="leaderboard-card">' + rows + '</div>' +
       '</div>';
