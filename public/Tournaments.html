@@ -209,9 +209,7 @@
     return categoryLabel(t.category);
   }
   function playersValue(t, s, forScheduled) {
-    if (forScheduled) {
-      return s.isLeague ? (window.T('tournaments.card.players_up_to_prefix') + ' ' + t.capacity) : t.capacity;
-    }
+    if (forScheduled) return t.capacity;
     return t.filledPlayers != null ? t.filledPlayers : t.capacity;
   }
 
